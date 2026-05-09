@@ -1,0 +1,82 @@
+# ============================================
+# ARCHIVOS DE CONFIGURACIÓN CON CREDENCIALES
+# ============================================
+config/config.php
+config/Email.php
+
+# ============================================
+# ARCHIVOS DE PRUEBA Y DIAGNÓSTICO
+# ============================================
+test_email.php
+diagnostico_email.php
+verificar_uploads.php
+actualizar_db.php
+debug.log
+error.log
+
+# ============================================
+# ARCHIVOS SUBIDOS POR USUARIOS
+# ============================================
+uploads/*
+!uploads/.htaccess
+!uploads/videos/
+!uploads/documentos/
+!uploads/imagenes/
+!uploads/audio/
+!uploads/recursos/
+
+# Mantener carpetas pero vacías
+uploads/videos/*
+!uploads/videos/.gitkeep
+uploads/documentos/*
+!uploads/documentos/.gitkeep
+uploads/imagenes/*
+!uploads/imagenes/.gitkeep
+uploads/audio/*
+!uploads/audio/.gitkeep
+uploads/recursos/*
+!uploads/recursos/.gitkeep
+
+# ============================================
+# ARCHIVOS DEL SISTEMA OPERATIVO
+# ============================================
+.DS_Store
+Thumbs.db
+desktop.ini
+*.swp
+*.swo
+*~
+
+# ============================================
+# ARCHIVOS DE IDEs
+# ============================================
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# ============================================
+# ARCHIVOS TEMPORALES PHP
+# ============================================
+*.log
+*.tmp
+composer.phar
+composer.lock
+vendor/
+
+# ============================================
+# ARCHIVOS DE NODE.JS (si usas npm/webpack)
+# ============================================
+node_modules/
+package-lock.json
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# ============================================
+# COPIAS DE SEGURIDAD
+# ============================================
+*.bak
+*.backup
+*.old
+*_backup

@@ -1,0 +1,27 @@
+# Permitir acceso a archivos pero prevenir ejecución de PHP
+<FilesMatch "\.(php|php3|php4|php5|phtml)$">
+    Order Deny,Allow
+    Deny from all
+</FilesMatch>
+
+# Habilitar descargas
+Options -Indexes
+AddType application/octet-stream .pdf
+AddType application/octet-stream .doc
+AddType application/octet-stream .docx
+AddType application/octet-stream .xls
+AddType application/octet-stream .xlsx
+AddType application/octet-stream .ppt
+AddType application/octet-stream .pptx
+AddType application/octet-stream .zip
+AddType application/octet-stream .rar
+
+# Tiempo de cache para archivos multimedia
+<IfModule mod_expires.c>
+    ExpiresActive On
+    ExpiresByType video/mp4 "access plus 1 month"
+    ExpiresByType audio/mpeg "access plus 1 month"
+    ExpiresByType image/jpeg "access plus 1 month"
+    ExpiresByType image/png "access plus 1 month"
+    ExpiresByType application/pdf "access plus 1 month"
+</IfModule>
