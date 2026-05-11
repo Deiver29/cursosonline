@@ -4,17 +4,39 @@
     Deny from all
 </FilesMatch>
 
-# Habilitar descargas
+# Configurar tipos de contenido para visualización en línea
 Options -Indexes
-AddType application/octet-stream .pdf
-AddType application/octet-stream .doc
-AddType application/octet-stream .docx
-AddType application/octet-stream .xls
-AddType application/octet-stream .xlsx
-AddType application/octet-stream .ppt
-AddType application/octet-stream .pptx
-AddType application/octet-stream .zip
-AddType application/octet-stream .rar
+
+# PDFs - mostrar en el navegador
+AddType application/pdf .pdf
+<FilesMatch "\.pdf$">
+    Header set Content-Disposition "inline"
+</FilesMatch>
+
+# Documentos Office - descargar
+AddType application/vnd.openxmlformats-officedocument.wordprocessingml.document .docx
+AddType application/msword .doc
+AddType application/vnd.openxmlformats-officedocument.spreadsheetml.sheet .xlsx
+AddType application/vnd.ms-excel .xls
+AddType application/vnd.openxmlformats-officedocument.presentationml.presentation .pptx
+AddType application/vnd.ms-powerpoint .ppt
+
+# Archivos comprimidos - descargar
+AddType application/zip .zip
+AddType application/x-rar-compressed .rar
+
+# Videos - streaming en línea
+AddType video/mp4 .mp4
+AddType video/x-msvideo .avi
+AddType video/quicktime .mov
+<FilesMatch "\.(mp4|avi|mov|wmv|mkv|webm)$">
+    Header set Content-Disposition "inline"
+</FilesMatch>
+
+# Permitir CORS para visores externos
+<IfModule mod_headers.c>
+    Header set Access-Control-Allow-Origin "*"
+</IfModule>
 
 # Tiempo de cache para archivos multimedia
 <IfModule mod_expires.c>

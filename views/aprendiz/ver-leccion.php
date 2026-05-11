@@ -47,11 +47,79 @@
                 </div>
             <?php endif; ?>
             
-            <?php if (($tipoContenido === 'documento' || $tipoContenido === 'pdf' || $tipoContenido === 'word') && $leccion['url_contenido']): ?>
+            <?php if ($tipoContenido === 'pdf' && $leccion['url_contenido']): ?>
                 <div style="margin-bottom: 2rem;">
-                    <a href="<?php echo $leccion['url_contenido']; ?>" class="btn btn-secondary" target="_blank">
-                        📄 Ver/Descargar Documento
-                    </a>
+                    <h3 class="mb-2">📄 Documento PDF</h3>
+                    <div style="position: relative; background: #f3f4f6; border-radius: 0.5rem; overflow: hidden;">
+                        <object data="<?php echo $leccion['url_contenido']; ?>#toolbar=1&navpanes=0&scrollbar=1" 
+                                type="application/pdf" 
+                                style="width: 100%; height: 700px; border: none;">
+                            <iframe src="https://docs.google.com/viewer?url=<?php echo urlencode($leccion['url_contenido']); ?>&embedded=true" 
+                                    style="width: 100%; height: 700px; border: none;">
+                                <p>Tu navegador no puede mostrar PDFs. 
+                                   <a href="<?php echo $leccion['url_contenido']; ?>" target="_blank">Haz clic aquí para abrirlo</a>
+                                </p>
+                            </iframe>
+                        </object>
+                    </div>
+                    <div style="margin-top: 1rem; text-align: center;">
+                        <a href="<?php echo $leccion['url_contenido']; ?>" class="btn btn-secondary" target="_blank">
+                            📖 Abrir en Nueva Pestaña
+                        </a>
+                        <a href="<?php echo $leccion['url_contenido']; ?>" class="btn btn-outline" download>
+                            ⬇️ Descargar PDF
+                        </a>
+                    </div>
+                </div>
+            <?php elseif (($tipoContenido === 'word' || $tipoContenido === 'excel' || $tipoContenido === 'presentacion') && $leccion['url_contenido']): ?>
+                <div style="margin-bottom: 2rem;">
+                    <h3 class="mb-2">
+                        <?php 
+                        $iconos = ['word' => '📝', 'excel' => '📊', 'presentacion' => '📊'];
+                        echo $iconos[$tipoContenido] ?? '📄';
+                        ?> Documento Office
+                    </h3>
+                    <iframe src="https://view.officeapps.live.com/op/embed.aspx?src=<?php echo urlencode($leccion['url_contenido']); ?>" 
+                            style="width: 100%; height: 700px; border: 1px solid #E5E7EB; border-radius: 0.5rem;">
+                    </iframe>
+                    <div style="margin-top: 1rem; text-align: center;">
+                        <a href="<?php echo $leccion['url_contenido']; ?>" class="btn btn-secondary" target="_blank">
+                            📖 Abrir en Nueva Pestaña
+                        </a>
+                        <a href="<?php echo $leccion['url_contenido']; ?>" class="btn btn-outline" download>
+                            ⬇️ Descargar Documento
+                        </a>
+                    </div>
+                </div>
+            <?php elseif ($tipoContenido === 'documento' && $leccion['url_contenido']): ?>
+                <div style="margin-bottom: 2rem;">
+                    <?php
+                    $extension = strtolower(pathinfo($leccion['url_contenido'], PATHINFO_EXTENSION));
+                    if ($extension === 'pdf'): ?>
+                        <h3 class="mb-2">📄 Documento PDF</h3>
+                        <div style="position: relative; background: #f3f4f6; border-radius: 0.5rem; overflow: hidden;">
+                            <object data="<?php echo $leccion['url_contenido']; ?>#toolbar=1&navpanes=0&scrollbar=1" 
+                                    type="application/pdf" 
+                                    style="width: 100%; height: 700px; border: none;">
+                                <iframe src="https://docs.google.com/viewer?url=<?php echo urlencode($leccion['url_contenido']); ?>&embedded=true" 
+                                        style="width: 100%; height: 700px; border: none;">
+                                </iframe>
+                            </object>
+                        </div>
+                    <?php elseif (in_array($extension, ['doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx'])): ?>
+                        <h3 class="mb-2">📄 Documento Office</h3>
+                        <iframe src="https://view.officeapps.live.com/op/embed.aspx?src=<?php echo urlencode($leccion['url_contenido']); ?>" 
+                                style="width: 100%; height: 700px; border: 1px solid #E5E7EB; border-radius: 0.5rem;">
+                        </iframe>
+                    <?php endif; ?>
+                    <div style="margin-top: 1rem; text-align: center;">
+                        <a href="<?php echo $leccion['url_contenido']; ?>" class="btn btn-secondary" target="_blank">
+                            📖 Abrir en Nueva Pestaña
+                        </a>
+                        <a href="<?php echo $leccion['url_contenido']; ?>" class="btn btn-outline" download>
+                            ⬇️ Descargar
+                        </a>
+                    </div>
                 </div>
             <?php endif; ?>
             
