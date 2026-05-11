@@ -33,6 +33,16 @@ class Modulo {
         return $stmt->fetchAll();
     }
     
+    // Obtener módulo por ID
+    public function obtenerPorId($id) {
+        $sql = "SELECT * FROM modulos WHERE id = :id";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindParam(':id', $id);
+        $stmt->execute();
+        
+        return $stmt->fetch();
+    }
+    
     // Actualizar módulo
     public function actualizar($id, $datos) {
         $sql = "UPDATE modulos SET 

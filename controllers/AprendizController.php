@@ -45,8 +45,8 @@ class AprendizController {
         $modulos = $moduloModel->obtenerPorCurso($id);
         
         // Obtener lecciones de cada módulo con progreso
-        foreach ($modulos as &$modulo) {
-            $modulo['lecciones'] = $leccionModel->obtenerPorModulo($modulo['id'], $_SESSION['usuario_id']);
+        for ($i = 0; $i < count($modulos); $i++) {
+            $modulos[$i]['lecciones'] = $leccionModel->obtenerPorModulo($modulos[$i]['id'], $_SESSION['usuario_id']);
         }
         
         $progreso = $progresoModel->obtenerProgresoCurso($_SESSION['usuario_id'], $id);
@@ -63,6 +63,18 @@ class AprendizController {
         if (!$leccion) {
             header("Location: " . BASE_URL . "aprendiz/dashboard");
             exit;
+        }
+        
+        // Verificar que el usuario compró el curso que contiene esta lección
+        $moduloModel = new Modulo();
+        $modulo = $moduloModel->obtenerPorId($leccion['modulo_id']);
+        
+        if ($modulo) {
+            $compraModel = new Compra();
+            if (!$compraModel->verificarCompra($_SESSION['usuario_id'], $modulo['curso_id'])) {
+                header("Location: " . BASE_URL . "aprendiz/dashboard");
+                exit;
+            }
         }
         
         require_once 'views/aprendiz/ver-leccion.php';

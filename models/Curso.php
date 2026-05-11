@@ -111,11 +111,11 @@ class Curso {
         return $stmt->fetchAll();
     }
     
-    // Obtener cursos de un capacitador
+    // Obtener cursos del capacitador
     public function obtenerPorCapacitador($capacitador_id) {
         $sql = "SELECT c.*, cat.nombre as categoria_nombre,
-                (SELECT AVG(calificacion) FROM resenas WHERE curso_id = c.id) as calificacion_promedio,
-                (SELECT COUNT(*) FROM compras WHERE curso_id = c.id) as total_estudiantes
+                (SELECT COUNT(*) FROM compras WHERE curso_id = c.id AND estado = 'completado') as total_ventas,
+                (SELECT AVG(calificacion) FROM resenas WHERE curso_id = c.id) as calificacion_promedio
                 FROM cursos c
                 INNER JOIN categorias cat ON c.categoria_id = cat.id
                 WHERE c.capacitador_id = :capacitador_id
@@ -137,9 +137,13 @@ class Curso {
                 idioma = :idioma,
                 nivel = :nivel,
                 precio = :precio,
-                moneda = :moneda,
-                imagen_portada = :imagen
-                WHERE id = :id";
+                moneda = :moneda";
+        
+        if (isset($datos['imagen'])) {
+            $sql .= ", imagen_portada = :imagen";
+        }
+        
+        $sql .= " WHERE id = :id";
         
         $stmt = $this->db->prepare($sql);
         $stmt->bindParam(':id', $id);
@@ -150,7 +154,10 @@ class Curso {
         $stmt->bindParam(':nivel', $datos['nivel']);
         $stmt->bindParam(':precio', $datos['precio']);
         $stmt->bindParam(':moneda', $datos['moneda']);
-        $stmt->bindParam(':imagen', $datos['imagen']);
+        
+        if (isset($datos['imagen'])) {
+            $stmt->bindParam(':imagen', $datos['imagen']);
+        }
         
         return $stmt->execute();
     }
@@ -175,15 +182,6 @@ class Curso {
         return $stmt->execute();
     }
     
-    // Eliminar curso
-    public function eliminar($id) {
-        $sql = "DELETE FROM cursos WHERE id = :id";
-        $stmt = $this->db->prepare($sql);
-        $stmt->bindParam(':id', $id);
-        
-        return $stmt->execute();
-    }
-    
     // Obtener cursos pendientes de aprobación
     public function obtenerPendientesAprobacion() {
         $sql = "SELECT c.*, cat.nombre as categoria_nombre, u.nombre as capacitador_nombre
@@ -194,6 +192,33 @@ class Curso {
                 ORDER BY c.fecha_creacion DESC";
         
         $stmt = $this->db->prepare($sql);
+        $stmt->execute();
+        
+        return $stmt->fetchAll();
+    }
+    
+    // Eliminar curso
+    public function eliminar($id) {
+        $sql = "DELETE FROM cursos WHERE id = :id";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindParam(':id', $id);
+        
+        return $stmt->execute();
+    }
+    
+    // Obtener cursos comprados por un usuario
+    public function obtenerCompradosPorUsuario($usuario_id) {
+        $sql = "SELECT c.*, cat.nombre as categoria_nombre, u.nombre as capacitador_nombre,
+                (SELECT AVG(calificacion) FROM resenas WHERE curso_id = c.id) as calificacion_promedio
+                FROM cursos c
+                INNER JOIN categorias cat ON c.categoria_id = cat.id
+                INNER JOIN usuarios u ON c.capacitador_id = u.id
+                INNER JOIN compras comp ON comp.curso_id = c.id
+                WHERE comp.usuario_id = :usuario_id AND comp.estado = 'completado'
+                ORDER BY comp.fecha_compra DESC";
+        
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindParam(':usuario_id', $usuario_id);
         $stmt->execute();
         
         return $stmt->fetchAll();

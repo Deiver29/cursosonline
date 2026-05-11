@@ -192,6 +192,11 @@ class CapacitadorController {
             try {
                 $url_contenido = $_POST['url_contenido'] ?? '';
                 
+                // Convertir URLs de YouTube/Vimeo al formato embed
+                if (!empty($url_contenido)) {
+                    $url_contenido = $this->convertirURLVideo($url_contenido);
+                }
+                
                 // Verificar si se subió un archivo
                 if (isset($_FILES['archivo_contenido']) && $_FILES['archivo_contenido']['error'] === UPLOAD_ERR_OK) {
                     $url_contenido = $this->subirArchivo($_FILES['archivo_contenido'], $_POST['tipo_contenido']);
@@ -388,4 +393,28 @@ class CapacitadorController {
         header("Location: " . BASE_URL . "capacitador/editarCurso/" . $curso_id);
         exit;
     }
+    
+    /**
+     * Convierte URLs de YouTube y Vimeo al formato embed
+     */
+    private function convertirURLVideo($url) {
+        // YouTube - Formatos soportados:
+        // https://www.youtube.com/watch?v=VIDEO_ID
+        // https://youtu.be/VIDEO_ID
+        // https://m.youtube.com/watch?v=VIDEO_ID
+        if (preg_match('/(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/', $url, $matches)) {
+            return 'https://www.youtube.com/embed/' . $matches[1];
+        }
+        
+        // Vimeo - Formatos soportados:
+        // https://vimeo.com/VIDEO_ID
+        // https://player.vimeo.com/video/VIDEO_ID
+        if (preg_match('/(?:vimeo\.com\/(?:video\/)?|player\.vimeo\.com\/video\/)(\d+)/', $url, $matches)) {
+            return 'https://player.vimeo.com/video/' . $matches[1];
+        }
+        
+        // Si no es YouTube ni Vimeo, devolver la URL original
+        return $url;
+    }
 }
+
