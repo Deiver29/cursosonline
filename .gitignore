@@ -10,6 +10,9 @@ config/Email.php
 test_email.php
 diagnostico_email.php
 verificar_uploads.php
+verificar_duplicados.php
+limpiar_duplicados.php
+ajustar_php.php
 actualizar_db.php
 debug.log
 error.log

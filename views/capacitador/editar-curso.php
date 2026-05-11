@@ -11,6 +11,22 @@
         <div class="alert alert-success"><?php echo $mensaje; ?></div>
     <?php endif; ?>
     
+    <?php if (isset($_SESSION['mensaje'])): ?>
+        <div class="alert alert-success"><?php echo $_SESSION['mensaje']; unset($_SESSION['mensaje']); ?></div>
+    <?php endif; ?>
+    
+    <?php if (isset($_SESSION['warning'])): ?>
+        <div class="alert alert-warning" style="background: #FEF3C7; color: #92400E; padding: 15px; border-radius: 8px; margin-bottom: 20px;">
+            <strong>⚠️ Aviso:</strong> <?php echo $_SESSION['warning']; unset($_SESSION['warning']); ?>
+        </div>
+    <?php endif; ?>
+    
+    <?php if (isset($_SESSION['error'])): ?>
+        <div class="alert alert-danger" style="background: #FEE2E2; color: #991B1B; padding: 15px; border-radius: 8px; margin-bottom: 20px;">
+            <strong>⚠️ Error:</strong> <?php echo $_SESSION['error']; unset($_SESSION['error']); ?>
+        </div>
+    <?php endif; ?>
+    
     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
         <div>
             <div class="card mb-3">
@@ -142,8 +158,9 @@
                     
                     <div id="moduloForm" style="display: none;" class="card mb-3" style="background: var(--light-color);">
                         <div class="card-body">
-                            <form method="POST" action="<?php echo BASE_URL; ?>capacitador/agregarModulo">
+                            <form method="POST" action="<?php echo BASE_URL; ?>capacitador/agregarModulo" id="formModulo" onsubmit="return agregarTokenUnico(this);">
                                 <input type="hidden" name="curso_id" value="<?php echo $curso['id']; ?>">
+                                <input type="hidden" name="form_token" value="" id="token_modulo">
                                 <div class="form-group">
                                     <label class="form-label">Título del Módulo</label>
                                     <input type="text" name="titulo" class="form-control" required>
@@ -167,17 +184,74 @@
                         <?php foreach ($modulos as $index => $modulo): ?>
                             <div class="card mb-2">
                                 <div class="card-body">
-                                    <h4><?php echo $modulo['titulo']; ?></h4>
-                                    <p style="color: #6b7280; font-size: 0.875rem;"><?php echo $modulo['descripcion']; ?></p>
+                                    <div style="display: flex; justify-content: space-between; align-items: start;">
+                                        <div>
+                                            <h4><?php echo $modulo['titulo']; ?></h4>
+                                            <p style="color: #6b7280; font-size: 0.875rem;"><?php echo $modulo['descripcion']; ?></p>
+                                        </div>
+                                        <button onclick="if(confirm('¿Eliminar este módulo y todas sus lecciones?')) { window.location.href='<?php echo BASE_URL; ?>capacitador/eliminarModulo/<?php echo $modulo['id']; ?>/<?php echo $curso['id']; ?>'; }" 
+                                                class="btn btn-danger btn-small" 
+                                                style="background: #DC2626; padding: 0.4rem 0.8rem; font-size: 0.85rem;">
+                                            🗑️ Eliminar Módulo
+                                        </button>
+                                    </div>
                                     
                                     <button onclick="toggleForm('leccionForm<?php echo $index; ?>')" class="btn btn-secondary btn-small">
                                         ➕ Agregar Lección
                                     </button>
                                     
+                                    <!-- Listado de lecciones existentes -->
+                                    <?php if (!empty($modulo['lecciones'])): ?>
+                                        <div style="margin-top: 1rem; padding-left: 1rem;">
+                                            <h5 style="color: #6D28D9; font-size: 0.9rem; margin-bottom: 0.5rem;">📚 Lecciones:</h5>
+                                            <?php foreach ($modulo['lecciones'] as $leccion): ?>
+                                                <div style="padding: 0.75rem; background: #F9FAFB; border-left: 3px solid #6D28D9; margin-bottom: 0.5rem; border-radius: 0.25rem;">
+                                                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                                                        <div style="flex: 1;">
+                                                            <strong style="color: #1F2937;"><?php echo $leccion['orden']; ?>. <?php echo htmlspecialchars($leccion['titulo']); ?></strong>
+                                                            <div style="color: #6B7280; font-size: 0.8rem; margin-top: 0.25rem;">
+                                                                <?php
+                                                                $iconos = [
+                                                                    'video' => '🎥', 'video_archivo' => '📹', 'pdf' => '📄',
+                                                                    'word' => '📝', 'presentacion' => '📊', 'excel' => '📈',
+                                                                    'codigo' => '💻', 'texto' => '📃', 'markdown' => '📋',
+                                                                    'audio' => '🎵', 'imagen' => '🖼️', 'quiz' => '❓',
+                                                                    'recurso' => '📦', 'enlace' => '🔗'
+                                                                ];
+                                                                echo $iconos[$leccion['tipo_contenido']] ?? '📄';
+                                                                echo ' ' . ucfirst($leccion['tipo_contenido']);
+                                                                if ($leccion['duracion'] > 0) {
+                                                                    echo ' • ⏱️ ' . $leccion['duracion'] . ' min';
+                                                                }
+                                                                ?>
+                                                            </div>
+                                                            <?php if (!empty($leccion['url_contenido'])): ?>
+                                                                <div style="color: #059669; font-size: 0.75rem; margin-top: 0.25rem;">
+                                                                    ✓ Contenido cargado
+                                                                    <?php if (strpos($leccion['url_contenido'], BASE_URL . 'uploads/') === 0): ?>
+                                                                        <span style="color: #2563EB;">• 📤 Archivo subido</span>
+                                                                    <?php else: ?>
+                                                                        <span style="color: #7C3AED;">• 🔗 URL externa</span>
+                                                                    <?php endif; ?>
+                                                                </div>
+                                                            <?php endif; ?>
+                                                        </div>
+                                                        <button onclick="if(confirm('¿Eliminar esta lección?')) { window.location.href='<?php echo BASE_URL; ?>capacitador/eliminarLeccion/<?php echo $leccion['id']; ?>/<?php echo $curso['id']; ?>'; }" 
+                                                                class="btn btn-danger btn-small" 
+                                                                style="background: #DC2626; padding: 0.3rem 0.6rem; font-size: 0.8rem; margin-left: 1rem;">
+                                                            🗑️
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            <?php endforeach; ?>
+                                        </div>
+                                    <?php endif; ?>
+                                    
                                     <div id="leccionForm<?php echo $index; ?>" style="display: none; margin-top: 1rem; padding: 1rem; background: var(--light-color); border-radius: 0.5rem;">
-                                        <form method="POST" action="<?php echo BASE_URL; ?>capacitador/agregarLeccion" enctype="multipart/form-data">
+                                        <form method="POST" action="<?php echo BASE_URL; ?>capacitador/agregarLeccion" enctype="multipart/form-data" id="formLeccion<?php echo $index; ?>" onsubmit="return agregarTokenUnico(this);">
                                             <input type="hidden" name="modulo_id" value="<?php echo $modulo['id']; ?>">
                                             <input type="hidden" name="curso_id" value="<?php echo $curso['id']; ?>">
+                                            <input type="hidden" name="form_token" value="" class="token_leccion">
                                             
                                             <div class="form-group">
                                                 <label class="form-label">Título de la Lección</label>
@@ -244,8 +318,14 @@
                                                 <label class="form-label">Selecciona el Archivo</label>
                                                 <input type="file" name="archivo_contenido" class="form-control" id="archivo_contenido_<?php echo $index; ?>" accept="*/*">
                                                 <small id="file_help_<?php echo $index; ?>" style="color: #6B7280; display: block; margin-top: 0.5rem;">
-                                                    📦 Tamaño máximo: 500MB<br>
-                                                    💡 Formatos aceptados: Videos (.mp4, .mov, .avi), Documentos (.pdf, .docx, .pptx), Audio (.mp3), Imágenes (.jpg, .png), Comprimidos (.zip, .rar)
+                                                    📦 <strong>Tamaño máximo: 500MB</strong> (límite actual de PHP: <?php echo ini_get('upload_max_filesize'); ?>)<br>
+                                                    💡 Formatos aceptados: Videos (.mp4, .mov, .avi), Documentos (.pdf, .docx, .pptx), Audio (.mp3), Imágenes (.jpg, .png), Comprimidos (.zip, .rar)<br>
+                                                    <?php 
+                                                    $limit_mb = (int)ini_get('upload_max_filesize');
+                                                    if ($limit_mb < 100): 
+                                                    ?>
+                                                        <span style="color: #DC2626;">⚠️ Límite bajo detectado. <a href="<?php echo BASE_URL; ?>ajustar_php.php" target="_blank" style="color: #2563EB; text-decoration: underline;">Clic aquí para aumentarlo</a></span>
+                                                    <?php endif; ?>
                                                 </small>
                                                 <div id="preview_archivo_<?php echo $index; ?>" style="margin-top: 0.5rem; padding: 0.75rem; background: #F3F4F6; border-radius: 0.5rem; display: none;">
                                                     <strong>Archivo seleccionado:</strong>
@@ -269,7 +349,7 @@
                                                 <input type="number" name="orden" class="form-control" value="1" required>
                                             </div>
                                             
-                                            <button type="submit" class="btn btn-primary btn-small">Guardar Lección</button>
+                                            <button type="submit" class="btn btn-primary btn-small" id="btn_leccion_<?php echo $index; ?>">Guardar Lección</button>
                                         </form>
                                     </div>
                                 </div>
@@ -283,6 +363,24 @@
 </div>
 
 <script>
+// Función para generar token único justo antes de enviar
+function agregarTokenUnico(form) {
+    const tokenInput = form.querySelector('input[name="form_token"]');
+    if (tokenInput && !tokenInput.value) {
+        // Generar token único con timestamp y random
+        tokenInput.value = 'token_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+    }
+    
+    // Deshabilitar el botón submit para evitar doble clic
+    const submitBtn = form.querySelector('button[type="submit"]');
+    if (submitBtn && !submitBtn.disabled) {
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = '⏳ Guardando...';
+    }
+    
+    return true; // Permitir envío del formulario
+}
+
 function toggleForm(formId) {
     const form = document.getElementById(formId);
     form.style.display = form.style.display === 'none' ? 'block' : 'none';
@@ -356,9 +454,12 @@ function updateContentOptions(select, index) {
     }
 }
 
-// Mostrar información del archivo seleccionado
+// Mostrar información del archivo seleccionado y validar tamaño
 document.addEventListener('DOMContentLoaded', function() {
     const fileInputs = document.querySelectorAll('input[type="file"]');
+    
+    // Límite máximo en bytes (500MB por defecto, puedes ajustar según php.ini)
+    const MAX_FILE_SIZE = 500 * 1024 * 1024; // 500MB
     
     fileInputs.forEach(function(input) {
         input.addEventListener('change', function(e) {
@@ -374,8 +475,43 @@ document.addEventListener('DOMContentLoaded', function() {
                 
                 if (preview && nombreDiv && tamanoDiv) {
                     nombreDiv.textContent = '📄 ' + file.name;
-                    tamanoDiv.textContent = '💾 Tamaño: ' + formatBytes(file.size);
-                    preview.style.display = 'block';
+                    
+                    // Validar tamaño
+                    if (file.size > MAX_FILE_SIZE) {
+                        tamanoDiv.innerHTML = '❌ <span style="color: #DC2626;">Tamaño: ' + formatBytes(file.size) + ' - EXCEDE EL LÍMITE DE 500MB</span>';
+                        e.target.value = ''; // Limpiar selección
+                        alert('⚠️ El archivo es demasiado grande.\n\n' +
+                              'Tamaño del archivo: ' + formatBytes(file.size) + '\n' +
+                              'Límite máximo: 500MB\n\n' +
+                              'Por favor, selecciona un archivo más pequeño o comprime el video.');
+                        preview.style.display = 'none';
+                    } else {
+                        tamanoDiv.innerHTML = '💾 Tamaño: ' + formatBytes(file.size) + ' <span style="color: #059669;">✓</span>';
+                        preview.style.display = 'block';
+                    }
+                }
+            }
+        });
+    });
+    
+    // Validar formularios antes de enviar
+    const forms = document.querySelectorAll('form[enctype="multipart/form-data"]');
+    forms.forEach(function(form) {
+        form.addEventListener('submit', function(e) {
+            const fileInput = form.querySelector('input[type="file"]');
+            if (fileInput && fileInput.files.length > 0) {
+                const file = fileInput.files[0];
+                if (file.size > MAX_FILE_SIZE) {
+                    e.preventDefault();
+                    alert('⚠️ No se puede subir el archivo.\n\nEl archivo excede el límite de 500MB.\nTamaño actual: ' + formatBytes(file.size));
+                    return false;
+                }
+                
+                // Mostrar indicador de progreso
+                const submitBtn = form.querySelector('button[type="submit"]');
+                if (submitBtn) {
+                    submitBtn.disabled = true;
+                    submitBtn.innerHTML = '⏳ Subiendo archivo... Por favor espera';
                 }
             }
         });

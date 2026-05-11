@@ -91,9 +91,15 @@ class CapacitadorController {
         
         $categoriaModel = new Categoria();
         $moduloModel = new Modulo();
+        $leccionModel = new Leccion();
         
         $categorias = $categoriaModel->obtenerTodas();
         $modulos = $moduloModel->obtenerPorCurso($id);
+        
+        // Obtener lecciones de cada módulo
+        for ($i = 0; $i < count($modulos); $i++) {
+            $modulos[$i]['lecciones'] = $leccionModel->obtenerPorModulo($modulos[$i]['id']);
+        }
         
         require_once 'views/capacitador/editar-curso.php';
     }
@@ -102,6 +108,28 @@ class CapacitadorController {
         $this->verificarAcceso();
         
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            // Prevenir doble envío
+            $token = $_POST['form_token'] ?? '';
+            
+            if (!empty($token) && isset($_SESSION['processed_tokens']) && in_array($token, $_SESSION['processed_tokens'])) {
+                // Este formulario ya fue procesado
+                $_SESSION['warning'] = "Este módulo ya fue agregado anteriormente.";
+                header("Location: " . BASE_URL . "capacitador/editarCurso/" . $_POST['curso_id']);
+                exit;
+            }
+            
+            // Verificar si ya existe un módulo con el mismo título en este curso
+            $moduloModel = new Modulo();
+            $modulosExistentes = $moduloModel->obtenerPorCurso($_POST['curso_id']);
+            
+            foreach ($modulosExistentes as $mod) {
+                if (trim(strtolower($mod['titulo'])) === trim(strtolower($_POST['titulo']))) {
+                    $_SESSION['error'] = "Ya existe un módulo con el título '" . htmlspecialchars($_POST['titulo']) . "' en este curso.";
+                    header("Location: " . BASE_URL . "capacitador/editarCurso/" . $_POST['curso_id']);
+                    exit;
+                }
+            }
+            
             $datos = [
                 'curso_id' => $_POST['curso_id'],
                 'titulo' => $_POST['titulo'],
@@ -109,10 +137,21 @@ class CapacitadorController {
                 'orden' => $_POST['orden']
             ];
             
-            $moduloModel = new Modulo();
             $moduloModel->crear($datos);
             
-            header("Location: " . BASE_URL . "capacitador/editarCurso/" . $datos['curso_id']);
+            // Marcar token como procesado
+            if (!isset($_SESSION['processed_tokens'])) {
+                $_SESSION['processed_tokens'] = [];
+            }
+            $_SESSION['processed_tokens'][] = $token;
+            
+            // Mantener solo los últimos 10 tokens
+            if (count($_SESSION['processed_tokens']) > 10) {
+                array_shift($_SESSION['processed_tokens']);
+            }
+            
+            $_SESSION['mensaje'] = "Módulo agregado correctamente";
+            header("Location: " . BASE_URL . "capacitador/editarCurso/" . $_POST['curso_id']);
             exit;
         }
     }
@@ -121,28 +160,90 @@ class CapacitadorController {
         $this->verificarAcceso();
         
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $url_contenido = $_POST['url_contenido'] ?? '';
-            
-            // Verificar si se subió un archivo
-            if (isset($_FILES['archivo_contenido']) && $_FILES['archivo_contenido']['error'] === UPLOAD_ERR_OK) {
-                $url_contenido = $this->subirArchivo($_FILES['archivo_contenido'], $_POST['tipo_contenido']);
+            // Verificar si el POST fue exitoso (no excedió el límite)
+            if (empty($_POST) && empty($_FILES)) {
+                $_SESSION['error'] = "El archivo es demasiado grande. El límite actual de PHP es " . ini_get('post_max_size') . ". <a href='" . BASE_URL . "verificar_limites.php' target='_blank' style='color: #2563EB; text-decoration: underline;'>Ver instrucciones para aumentar el límite</a>";
+                header("Location: " . $_SERVER['HTTP_REFERER'] ?? BASE_URL . "capacitador/dashboard");
+                exit;
             }
             
-            $datos = [
-                'modulo_id' => $_POST['modulo_id'],
-                'titulo' => $_POST['titulo'],
-                'contenido' => $_POST['contenido'],
-                'tipo_contenido' => $_POST['tipo_contenido'],
-                'url_contenido' => $url_contenido,
-                'duracion' => $_POST['duracion'],
-                'orden' => $_POST['orden']
-            ];
+            // Prevenir doble envío
+            $token = $_POST['form_token'] ?? '';
             
+            if (!empty($token) && isset($_SESSION['processed_tokens']) && in_array($token, $_SESSION['processed_tokens'])) {
+                // Este formulario ya fue procesado
+                $_SESSION['warning'] = "Esta lección ya fue agregada anteriormente.";
+                header("Location: " . BASE_URL . "capacitador/editarCurso/" . $_POST['curso_id']);
+                exit;
+            }
+            
+            // Verificar si ya existe una lección con el mismo título en este módulo
             $leccionModel = new Leccion();
-            $leccionModel->crear($datos);
+            $leccionesExistentes = $leccionModel->obtenerPorModulo($_POST['modulo_id']);
             
-            header("Location: " . BASE_URL . "capacitador/editarCurso/" . $_POST['curso_id']);
-            exit;
+            foreach ($leccionesExistentes as $lec) {
+                if (trim(strtolower($lec['titulo'])) === trim(strtolower($_POST['titulo']))) {
+                    $_SESSION['error'] = "Ya existe una lección con el título '" . htmlspecialchars($_POST['titulo']) . "' en este módulo.";
+                    header("Location: " . BASE_URL . "capacitador/editarCurso/" . $_POST['curso_id']);
+                    exit;
+                }
+            }
+            
+            try {
+                $url_contenido = $_POST['url_contenido'] ?? '';
+                
+                // Verificar si se subió un archivo
+                if (isset($_FILES['archivo_contenido']) && $_FILES['archivo_contenido']['error'] === UPLOAD_ERR_OK) {
+                    $url_contenido = $this->subirArchivo($_FILES['archivo_contenido'], $_POST['tipo_contenido']);
+                } elseif (isset($_FILES['archivo_contenido']) && $_FILES['archivo_contenido']['error'] !== UPLOAD_ERR_NO_FILE) {
+                    // Manejar errores de subida
+                    $errores = [
+                        UPLOAD_ERR_INI_SIZE => 'El archivo excede el límite de ' . ini_get('upload_max_filesize'),
+                        UPLOAD_ERR_FORM_SIZE => 'El archivo excede el límite especificado en el formulario',
+                        UPLOAD_ERR_PARTIAL => 'El archivo solo se subió parcialmente',
+                        UPLOAD_ERR_NO_TMP_DIR => 'Falta la carpeta temporal',
+                        UPLOAD_ERR_CANT_WRITE => 'Error al escribir el archivo en disco',
+                        UPLOAD_ERR_EXTENSION => 'Una extensión de PHP detuvo la subida'
+                    ];
+                    
+                    throw new Exception($errores[$_FILES['archivo_contenido']['error']] ?? 'Error desconocido al subir el archivo');
+                }
+                
+                $datos = [
+                    'modulo_id' => $_POST['modulo_id'],
+                    'titulo' => $_POST['titulo'],
+                    'contenido' => $_POST['contenido'],
+                    'tipo_contenido' => $_POST['tipo_contenido'],
+                    'url_contenido' => $url_contenido,
+                    'duracion' => $_POST['duracion'],
+                    'orden' => $_POST['orden']
+                ];
+                
+                $leccionModel = new Leccion();
+                $leccionModel->crear($datos);
+                
+                // Marcar token como procesado
+                if (!empty($token)) {
+                    if (!isset($_SESSION['processed_tokens'])) {
+                        $_SESSION['processed_tokens'] = [];
+                    }
+                    $_SESSION['processed_tokens'][] = $token;
+                    
+                    // Mantener solo los últimos 10 tokens
+                    if (count($_SESSION['processed_tokens']) > 10) {
+                        array_shift($_SESSION['processed_tokens']);
+                    }
+                }
+                
+                $_SESSION['mensaje'] = "Lección agregada correctamente";
+                header("Location: " . BASE_URL . "capacitador/editarCurso/" . $_POST['curso_id']);
+                exit;
+                
+            } catch (Exception $e) {
+                $_SESSION['error'] = $e->getMessage();
+                header("Location: " . $_SERVER['HTTP_REFERER'] ?? BASE_URL . "capacitador/dashboard");
+                exit;
+            }
         }
     }
     
@@ -235,6 +336,56 @@ class CapacitadorController {
         }
         
         header("Location: " . BASE_URL . "capacitador/misCursos");
+        exit;
+    }
+    
+    public function eliminarLeccion($leccion_id, $curso_id) {
+        $this->verificarAcceso();
+        
+        $leccionModel = new Leccion();
+        $leccion = $leccionModel->obtenerPorId($leccion_id);
+        
+        if ($leccion) {
+            // Si es un archivo subido, eliminarlo del servidor
+            if (!empty($leccion['url_contenido']) && strpos($leccion['url_contenido'], BASE_URL . 'uploads/') === 0) {
+                $archivo_path = str_replace(BASE_URL, '', $leccion['url_contenido']);
+                $archivo_completo = __DIR__ . '/../' . $archivo_path;
+                if (file_exists($archivo_completo)) {
+                    unlink($archivo_completo);
+                }
+            }
+            
+            $leccionModel->eliminar($leccion_id);
+        }
+        
+        header("Location: " . BASE_URL . "capacitador/editarCurso/" . $curso_id);
+        exit;
+    }
+    
+    public function eliminarModulo($modulo_id, $curso_id) {
+        $this->verificarAcceso();
+        
+        $moduloModel = new Modulo();
+        $leccionModel = new Leccion();
+        
+        // Obtener lecciones del módulo para eliminar archivos
+        $lecciones = $leccionModel->obtenerPorModulo($modulo_id);
+        
+        foreach ($lecciones as $leccion) {
+            // Si es un archivo subido, eliminarlo del servidor
+            if (!empty($leccion['url_contenido']) && strpos($leccion['url_contenido'], BASE_URL . 'uploads/') === 0) {
+                $archivo_path = str_replace(BASE_URL, '', $leccion['url_contenido']);
+                $archivo_completo = __DIR__ . '/../' . $archivo_path;
+                if (file_exists($archivo_completo)) {
+                    unlink($archivo_completo);
+                }
+            }
+        }
+        
+        // Eliminar módulo (las lecciones se eliminan en cascada)
+        $moduloModel->eliminar($modulo_id);
+        
+        header("Location: " . BASE_URL . "capacitador/editarCurso/" . $curso_id);
         exit;
     }
 }

@@ -11,7 +11,7 @@
         <div class="container">
             <nav class="navbar">
                 <a href="<?php echo BASE_URL; ?>" class="logo">
-                    <img src="<?php echo BASE_URL; ?>assets/images/Learnly.png" alt="Learnly" class="logo-img">
+                    <img src="<?php echo BASE_URL; ?>assets/images/Learnly.svg" alt="Learnly" class="logo-img">
                 </a>
                 
                 <div class="mobile-menu-toggle" onclick="toggleMobileMenu()">
