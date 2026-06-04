@@ -52,7 +52,7 @@
         
         <div class="d-flex justify-between align-center mb-3">
             <h2>Mis Cursos</h2>
-            <a href="<?php echo BASE_URL; ?>capacitador/crearCurso" class="btn btn-primary">âž• Crear Nuevo Curso</a>
+            <a href="<?php echo BASE_URL; ?>capacitador/crearCurso" class="btn btn-primary">• Crear Nuevo Curso</a>
         </div>
         
         <?php if (empty($cursos)): ?>

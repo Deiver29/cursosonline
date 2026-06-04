@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guía para Compartir tu Aplicación Web con Compañeros</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            color: #333;
+        }
+        h1 {
+            color: #2c3e50;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 10px;
+        }
+        h2 {
+            color: #34495e;
+            margin-top: 30px;
+            border-left: 4px solid #3498db;
+            padding-left: 10px;
+        }
+        h3 {
+            color: #555;
+            margin-top: 20px;
+        }
+        .warning {
+            background-color: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin: 20px 0;
+        }
+        .info {
+            background-color: #d1ecf1;
+            border-left: 4px solid #17a2b8;
+            padding: 15px;
+            margin: 20px 0;
+        }
+        .success {
+            background-color: #d4edda;
+            border-left: 4px solid #28a745;
+            padding: 15px;
+            margin: 20px 0;
+        }
+        .code {
+            background-color: #f4f4f4;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 10px;
+            font-family: 'Courier New', monospace;
+            margin: 10px 0;
+        }
+        .step {
+            background-color: #f8f9fa;
+            border-radius: 5px;
+            padding: 15px;
+            margin: 15px 0;
+        }
+        .step-number {
+            background-color: #3498db;
+            color: white;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+        ul {
+            margin-left: 20px;
+        }
+        li {
+            margin: 8px 0;
+        }
+        .url-example {
+            background-color: #e7f3ff;
+            padding: 10px;
+            border-radius: 4px;
+            font-weight: bold;
+            text-align: center;
+            margin: 15px 0;
+        }
+        @media print {
+            body {
+                max-width: 100%;
+            }
+            .no-print {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>📱 Guía para Compartir tu Aplicación Web con Compañeros de Universidad</h1>
+    
+    <div class="info">
+        <strong>¿Qué lograrás con esta guía?</strong><br>
+        Podrás compartir tu proyecto web (que normalmente solo funciona en tu computadora) con cualquier compañero de la universidad, sin importar dónde se encuentre. Solo necesitarán internet y un navegador.
+    </div>
+
+    <h2>🤔 ¿Qué es ngrok y para qué sirve?</h2>
+    <p>
+        Imagina que tu aplicación web es como una fiesta en tu casa. Normalmente, solo las personas que están dentro de tu casa (tu computadora) pueden disfrutarla. <strong>ngrok</strong> es como un túnel mágico que permite que personas de cualquier parte del mundo puedan acceder a tu fiesta sin estar físicamente en tu casa.
+    </p>
+    <p>
+        Es una herramienta gratuita que crea un "puente" entre tu computadora y el internet, generando una dirección web (URL) que cualquiera puede visitar.
+    </p>
+
+    <h2>📋 Requisitos Previos</h2>
+    <ul>
+        <li>Tener tu aplicación funcionando en XAMPP (Apache y MySQL iniciados)</li>
+        <li>Conexión a internet</li>
+        <li>Una cuenta gratuita en ngrok (te mostraremos cómo crearla)</li>
+    </ul>
+
+    <h2>🚀 Pasos para Compartir tu Aplicación</h2>
+
+    <div class="step">
+        <h3><span class="step-number">1</span> Descargar ngrok</h3>
+        <ul>
+            <li>Abre tu navegador y ve a la página: <strong>ngrok.com/download</strong></li>
+            <li>Haz clic en el botón de descarga para Windows</li>
+            <li>Descarga un archivo comprimido (ZIP)</li>
+            <li>Extrae el archivo <code>ngrok.exe</code> a una carpeta fácil de encontrar (por ejemplo: <code>C:\ngrok\</code>)</li>
+        </ul>
+    </div>
+
+    <div class="step">
+        <h3><span class="step-number">2</span> Crear una Cuenta Gratuita en ngrok</h3>
+        <ul>
+            <li>Ve a: <strong>ngrok.com/signup</strong></li>
+            <li>Regístrate con tu correo electrónico (puedes usar tu correo universitario)</li>
+            <li>Confirma tu cuenta desde el email que te enviarán</li>
+            <li>Inicia sesión en ngrok</li>
+        </ul>
+    </div>
+
+    <div class="step">
+        <h3><span class="step-number">3</span> Obtener tu Token de Autenticación</h3>
+        <p>El token es como una llave digital que identifica tu cuenta.</p>
+        <ul>
+            <li>Una vez que inicies sesión, automáticamente te redirigirá a una página de inicio</li>
+            <li>Verás un comando que dice: <code>ngrok config add-authtoken [tu-token]</code></li>
+            <li>Haz clic en el botón de copiar (📋) al lado de ese comando</li>
+        </ul>
+    </div>
+
+    <div class="step">
+        <h3><span class="step-number">4</span> Abrir la Terminal de Windows</h3>
+        <ul>
+            <li>Presiona las teclas <strong>Windows + R</strong> en tu teclado</li>
+            <li>Escribe <strong>cmd</strong> y presiona Enter</li>
+            <li>Se abrirá una ventana negra (la terminal)</li>
+            <li>Navega a la carpeta donde guardaste ngrok escribiendo:
+                <div class="code">cd C:\ngrok</div>
+                (ajusta la ruta si guardaste ngrok en otra ubicación)
+            </li>
+        </ul>
+    </div>
+
+    <div class="step">
+        <h3><span class="step-number">5</span> Configurar tu Token</h3>
+        <ul>
+            <li>En la terminal, pega el comando que copiaste en el paso 3</li>
+            <li>Presiona Enter</li>
+            <li>Verás un mensaje confirmando que tu configuración se guardó correctamente</li>
+        </ul>
+    </div>
+
+    <div class="step">
+        <h3><span class="step-number">6</span> Verificar el Puerto de tu Aplicación</h3>
+        <p>El puerto es como el "número de puerta" donde tu aplicación está funcionando en tu computadora.</p>
+        <ul>
+            <li>Abre tu navegador</li>
+            <li>Intenta acceder a: <code>http://localhost:8080/cursosonline</code></li>
+            <li>Si tu aplicación se carga, tu puerto es <strong>8080</strong></li>
+            <li>Si no funciona, intenta con: <code>http://localhost/cursosonline</code> (puerto <strong>80</strong>)</li>
+        </ul>
+    </div>
+
+    <div class="step">
+        <h3><span class="step-number">7</span> Iniciar ngrok</h3>
+        <ul>
+            <li>Asegúrate de que XAMPP esté corriendo (Apache y MySQL en verde)</li>
+            <li>En la terminal, escribe el siguiente comando (usa el puerto que identificaste en el paso anterior):
+                <div class="code">ngrok http 8080</div>
+                <em>Si tu puerto es 80, escribe: <code>ngrok http 80</code></em>
+            </li>
+            <li>Presiona Enter</li>
+        </ul>
+    </div>
+
+    <div class="step">
+        <h3><span class="step-number">8</span> Obtener tu URL Pública</h3>
+        <p>Verás una pantalla como esta en la terminal:</p>
+        <ul>
+            <li><strong>Session Status:</strong> online</li>
+            <li><strong>Forwarding:</strong> https://algo-algo-algo.ngrok-free.dev → http://localhost:8080</li>
+        </ul>
+        <p>La parte que dice <strong>https://algo-algo-algo.ngrok-free.dev</strong> es tu URL pública.</p>
+    </div>
+
+    <div class="step">
+        <h3><span class="step-number">9</span> Compartir con tus Compañeros</h3>
+        <p>Agrega <code>/cursosonline</code> al final de tu URL y compártela:</p>
+        <div class="url-example">
+            https://alto-sculpture-account.ngrok-free.dev/cursosonline
+        </div>
+        <p>Tus compañeros solo necesitan copiar y pegar esta URL en su navegador.</p>
+    </div>
+
+    <h2>⚠️ Consideraciones Importantes</h2>
+
+    <div class="warning">
+        <h3>📌 Mientras compartes tu aplicación:</h3>
+        <ul>
+            <li><strong>Tu computadora debe estar encendida</strong> - Si la apagas, la aplicación dejará de funcionar</li>
+            <li><strong>XAMPP debe estar corriendo</strong> - Apache y MySQL deben estar activos</li>
+            <li><strong>No cierres la ventana de ngrok</strong> - Si la cierras, la URL dejará de funcionar</li>
+            <li><strong>Mantén conexión a internet</strong> - Tanto tú como tus compañeros necesitan internet</li>
+        </ul>
+    </div>
+
+    <div class="info">
+        <h3>🔄 La URL cambia cada vez que:</h3>
+        <ul>
+            <li>Cierres y vuelvas a abrir ngrok</li>
+            <li>Reinicies tu computadora</li>
+            <li>Pasen 2 horas (límite de la versión gratuita)</li>
+        </ul>
+        <p><strong>Solución:</strong> Cuando esto pase, simplemente vuelve a ejecutar <code>ngrok http 8080</code> y comparte la nueva URL con tus compañeros.</p>
+    </div>
+
+    <div class="success">
+        <h3>✅ Pantalla de Advertencia de ngrok</h3>
+        <p>La primera vez que tus compañeros accedan a la URL, verán una pantalla de advertencia de ngrok (es normal con la versión gratuita). Solo deben hacer clic en el botón <strong>"Visit Site"</strong> para continuar.</p>
+    </div>
+
+    <h2>🛠️ Solución de Problemas Comunes</h2>
+
+    <h3>❌ Error: "Failed to complete tunnel connection"</h3>
+    <p><strong>Causa:</strong> XAMPP no está corriendo o el puerto es incorrecto.</p>
+    <p><strong>Solución:</strong> Verifica que Apache esté activo en XAMPP y que uses el puerto correcto.</p>
+
+    <h3>❌ Error: "authentication failed"</h3>
+    <p><strong>Causa:</strong> El token de autenticación es inválido.</p>
+    <p><strong>Solución:</strong> Ve a tu dashboard de ngrok y copia nuevamente el token, luego ejecuta el comando de configuración otra vez.</p>
+
+    <h3>❌ La página no carga o da error 404</h3>
+    <p><strong>Causa:</strong> La ruta a tu aplicación no es correcta.</p>
+    <p><strong>Solución:</strong> Asegúrate de agregar <code>/cursosonline</code> al final de la URL de ngrok.</p>
+
+    <h2>💡 Consejos Útiles</h2>
+
+    <ul>
+        <li><strong>Prueba tú primero:</strong> Antes de compartir la URL con tus compañeros, ábrela tú mismo en tu navegador para asegurarte de que funciona</li>
+        <li><strong>Usa incógnito:</strong> Abre la URL en modo incógnito para probar cómo la verán tus compañeros</li>
+        <li><strong>Guarda la URL:</strong> Copia y pega la URL en un lugar seguro mientras la estés usando</li>
+        <li><strong>Horarios de demostración:</strong> Coordina con tus compañeros un horario específico para que accedan, así tu computadora estará disponible</li>
+        <li><strong>Base de datos:</strong> Si tus compañeros crean cuentas o datos, estos se guardarán en tu base de datos local</li>
+    </ul>
+
+    <h2>📞 ¿Necesitas Ayuda?</h2>
+    <p>Si tienes problemas, puedes:</p>
+    <ul>
+        <li>Revisar la documentación oficial de ngrok: <strong>ngrok.com/docs</strong></li>
+        <li>Verificar que todos los servicios de XAMPP estén corriendo</li>
+        <li>Intentar reiniciar ngrok y obtener una nueva URL</li>
+    </ul>
+
+    <div class="success">
+        <h3>🎉 ¡Felicidades!</h3>
+        <p>Ahora puedes compartir tu proyecto con compañeros de cualquier parte del mundo. Esta es una excelente forma de hacer demostraciones, colaborar en proyectos o recibir retroalimentación de tu trabajo.</p>
+    </div>
+
+    <hr style="margin-top: 40px;">
+    <p style="text-align: center; color: #777; font-size: 0.9em;">
+        <em>Guía creada para compartir aplicaciones web locales usando ngrok</em><br>
+        Versión 1.0 - Mayo 2026
+    </p>
+
+    <div class="no-print" style="background-color: #f0f0f0; padding: 20px; border-radius: 5px; margin-top: 30px;">
+        <h3>📄 Para guardar como PDF:</h3>
+        <ol>
+            <li>Presiona <strong>Ctrl + P</strong> en tu teclado</li>
+            <li>Selecciona "Guardar como PDF" como impresora</li>
+            <li>Haz clic en "Guardar"</li>
+            <li>Elige dónde guardar el archivo</li>
+        </ol>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,1780 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marketplace Educativo - Documentación Completa</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f5f5f5;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+        }
+        
+        /* Portada */
+        .cover {
+            text-align: center;
+            padding: 60px 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 10px;
+            margin-bottom: 40px;
+        }
+        
+        .cover h1 {
+            font-size: 2.8em;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .cover .subtitle {
+            font-size: 1.3em;
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+        
+        .cover .version {
+            font-size: 0.9em;
+            opacity: 0.8;
+            margin-top: 30px;
+        }
+        
+        /* Índice */
+        .toc {
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 8px;
+            margin-bottom: 40px;
+            border-left: 5px solid #667eea;
+        }
+        
+        .toc h2 {
+            color: #667eea;
+            margin-bottom: 20px;
+            font-size: 1.8em;
+        }
+        
+        .toc ol {
+            margin-left: 20px;
+        }
+        
+        .toc li {
+            margin: 10px 0;
+            font-size: 1.1em;
+        }
+        
+        .toc a {
+            color: #333;
+            text-decoration: none;
+        }
+        
+        .toc a:hover {
+            color: #667eea;
+            text-decoration: underline;
+        }
+        
+        /* Secciones */
+        .section {
+            margin-bottom: 50px;
+            page-break-inside: avoid;
+        }
+        
+        h1 {
+            color: #2c3e50;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 15px;
+            margin-bottom: 25px;
+            font-size: 2.2em;
+        }
+        
+        h2 {
+            color: #34495e;
+            margin-top: 35px;
+            margin-bottom: 20px;
+            font-size: 1.8em;
+            border-left: 5px solid #667eea;
+            padding-left: 15px;
+        }
+        
+        h3 {
+            color: #555;
+            margin-top: 25px;
+            margin-bottom: 15px;
+            font-size: 1.4em;
+        }
+        
+        h4 {
+            color: #666;
+            margin-top: 20px;
+            margin-bottom: 10px;
+            font-size: 1.2em;
+        }
+        
+        p {
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+        
+        /* Cajas de información */
+        .info-box {
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            border-left: 5px solid;
+        }
+        
+        .info-box.blue {
+            background-color: #e3f2fd;
+            border-color: #2196f3;
+        }
+        
+        .info-box.green {
+            background-color: #e8f5e9;
+            border-color: #4caf50;
+        }
+        
+        .info-box.orange {
+            background-color: #fff3e0;
+            border-color: #ff9800;
+        }
+        
+        .info-box.purple {
+            background-color: #f3e5f5;
+            border-color: #9c27b0;
+        }
+        
+        .info-box h4 {
+            margin-top: 0;
+            color: inherit;
+        }
+        
+        /* Listas */
+        ul, ol {
+            margin-left: 30px;
+            margin-bottom: 15px;
+        }
+        
+        li {
+            margin: 8px 0;
+        }
+        
+        /* Características grid */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin: 20px 0;
+        }
+        
+        .feature-card {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+        }
+        
+        .feature-card h4 {
+            color: #667eea;
+            margin-top: 0;
+            margin-bottom: 10px;
+        }
+        
+        /* Roles */
+        .role-card {
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            padding: 25px;
+            margin: 20px 0;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .role-card h3 {
+            margin-top: 0;
+            color: #667eea;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .role-icon {
+            font-size: 1.5em;
+        }
+        
+        /* Código y comandos */
+        .code-block {
+            background-color: #2d2d2d;
+            color: #f8f8f2;
+            padding: 20px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            margin: 15px 0;
+            overflow-x: auto;
+        }
+        
+        code {
+            background-color: #f4f4f4;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            color: #c7254e;
+        }
+        
+        /* Tablas */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        th {
+            background-color: #667eea;
+            color: white;
+            padding: 12px;
+            text-align: left;
+            font-weight: 600;
+        }
+        
+        td {
+            padding: 12px;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+        
+        /* Pasos numerados */
+        .steps {
+            counter-reset: step-counter;
+            list-style: none;
+            margin-left: 0;
+        }
+        
+        .steps li {
+            counter-increment: step-counter;
+            margin-bottom: 30px;
+            padding-left: 60px;
+            position: relative;
+        }
+        
+        .steps li::before {
+            content: counter(step-counter);
+            position: absolute;
+            left: 0;
+            top: -5px;
+            background: #667eea;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+        
+        /* FAQ */
+        .faq-item {
+            background: #f8f9fa;
+            padding: 20px;
+            margin: 15px 0;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+        }
+        
+        .faq-question {
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+        
+        .faq-answer {
+            color: #555;
+        }
+        
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 30px 20px;
+            background: #f8f9fa;
+            border-top: 3px solid #667eea;
+            margin-top: 50px;
+            color: #666;
+        }
+        
+        /* Utilidades */
+        .text-center {
+            text-align: center;
+        }
+        
+        .emoji {
+            font-size: 1.2em;
+        }
+        
+        .highlight {
+            background-color: #fff59d;
+            padding: 2px 6px;
+            border-radius: 3px;
+        }
+        
+        /* Impresión */
+        @media print {
+            body {
+                background: white;
+            }
+            
+            .container {
+                max-width: 100%;
+                padding: 20px;
+            }
+            
+            .no-print {
+                display: none;
+            }
+            
+            .section {
+                page-break-inside: avoid;
+            }
+            
+            h1, h2, h3 {
+                page-break-after: avoid;
+            }
+        }
+        
+        @page {
+            margin: 2cm;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- PORTADA -->
+        <div class="cover">
+            <h1>📚 Marketplace Educativo Internacional</h1>
+            <p class="subtitle">Plataforma de Aprendizaje en Línea</p>
+            <p class="subtitle">Documentación Completa del Proyecto</p>
+            <p class="version">Versión 1.0 | Mayo 2026</p>
+        </div>
+
+        <!-- ÍNDICE -->
+        <div class="toc">
+            <h2>📋 Índice de Contenidos</h2>
+            <ol>
+                <li><a href="#introduccion">Introducción al Proyecto</a></li>
+                <li><a href="#que-es">¿Qué es este Proyecto?</a></li>
+                <li><a href="#caracteristicas">Características Principales</a></li>
+                <li><a href="#roles">Tipos de Usuarios y sus Funciones</a></li>
+                <li><a href="#funcionalidades">Funcionalidades Detalladas</a></li>
+                <li><a href="#como-usar">Cómo Usar la Plataforma</a></li>
+                <li><a href="#arquitectura">Arquitectura Técnica</a></li>
+                <li><a href="#instalacion">Guía de Instalación</a></li>
+                <li><a href="#compartir">Cómo Compartir con Compañeros</a></li>
+                <li><a href="#faq">Preguntas Frecuentes</a></li>
+            </ol>
+        </div>
+
+        <!-- 1. INTRODUCCIÓN -->
+        <div class="section" id="introduccion">
+            <h1>1. 📖 Introducción al Proyecto</h1>
+            
+            <p>Bienvenido a la documentación completa del <strong>Marketplace Educativo Internacional</strong>, un proyecto universitario que simula una plataforma de cursos en línea similar a Udemy, Coursera o Platzi.</p>
+            
+            <div class="info-box blue">
+                <h4>🎯 Objetivo del Proyecto</h4>
+                <p>Crear una plataforma web funcional donde instructores puedan publicar cursos educativos y estudiantes puedan comprarlos, acceder al contenido, y seguir su progreso de aprendizaje.</p>
+            </div>
+            
+            <h3>¿Por qué es importante este proyecto?</h3>
+            <p>Este proyecto demuestra competencias en:</p>
+            <ul>
+                <li><strong>Desarrollo web full-stack</strong> con tecnologías modernas</li>
+                <li><strong>Arquitectura de software</strong> siguiendo el patrón MVC (Modelo-Vista-Controlador)</li>
+                <li><strong>Gestión de bases de datos relacionales</strong></li>
+                <li><strong>Seguridad web</strong> (autenticación, autorización, protección de datos)</li>
+                <li><strong>Experiencia de usuario</strong> (UX/UI) intuitiva</li>
+                <li><strong>Sistema de comercio electrónico</strong> (carrito de compras, gestión de pagos)</li>
+            </ul>
+        </div>
+
+        <!-- 2. ¿QUÉ ES? -->
+        <div class="section" id="que-es">
+            <h1>2. 💡 ¿Qué es este Proyecto?</h1>
+            
+            <p>El <strong>Marketplace Educativo Internacional</strong> es una aplicación web completa que funciona como un mercado digital de cursos en línea.</p>
+            
+            <h3>Analogía del Mundo Real</h3>
+            <div class="info-box purple">
+                <p>Imagina que es como <strong>Amazon, pero para educación</strong>:</p>
+                <ul>
+                    <li>Los <strong>vendedores</strong> son instructores que crean y publican cursos</li>
+                    <li>Los <strong>compradores</strong> son estudiantes que buscan y compran cursos</li>
+                    <li>El <strong>administrador</strong> supervisa que todo funcione correctamente</li>
+                    <li>Hay un <strong>catálogo</strong> con búsqueda y filtros</li>
+                    <li>Existe un <strong>carrito de compras</strong> para realizar compras</li>
+                    <li>Los usuarios pueden dejar <strong>reseñas y calificaciones</strong></li>
+                </ul>
+            </div>
+            
+            <h3>Características Distintivas</h3>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <h4>🌍 Internacional</h4>
+                    <p>Soporte para múltiples idiomas (Español, Inglés, Francés, Portugués, Alemán) y monedas (USD, EUR, MXN, ARS, COP, GBP).</p>
+                </div>
+                <div class="feature-card">
+                    <h4>📊 Seguimiento de Progreso</h4>
+                    <p>Los estudiantes pueden marcar lecciones completadas y ver su avance en tiempo real.</p>
+                </div>
+                <div class="feature-card">
+                    <h4>🎥 Contenido Multimedia</h4>
+                    <p>Soporte para videos educativos y documentos descargables (PDF, Word, etc.).</p>
+                </div>
+                <div class="feature-card">
+                    <h4>⭐ Sistema de Reputación</h4>
+                    <p>Calificaciones con estrellas y comentarios de estudiantes reales.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 3. CARACTERÍSTICAS PRINCIPALES -->
+        <div class="section" id="caracteristicas">
+            <h1>3. ✨ Características Principales</h1>
+            
+            <h2>3.1 Sistema de Usuarios</h2>
+            <ul>
+                <li><strong>Registro y autenticación segura</strong> - Los usuarios crean cuentas con email y contraseña encriptada</li>
+                <li><strong>Perfiles personalizables</strong> - Cada usuario puede agregar foto, biografía, país e idioma preferido</li>
+                <li><strong>Tres roles diferenciados</strong> - Aprendiz, Capacitador y Administrador (cada uno con permisos específicos)</li>
+                <li><strong>Gestión de sesiones</strong> - Los usuarios permanecen autenticados mientras navegan</li>
+            </ul>
+            
+            <h2>3.2 Gestión de Cursos</h2>
+            <ul>
+                <li><strong>Creación completa de cursos</strong> - Título, descripción, precio, idioma, nivel, categoría</li>
+                <li><strong>Organización modular</strong> - Los cursos se dividen en módulos y estos en lecciones</li>
+                <li><strong>Contenido multimedia</strong>:
+                    <ul>
+                        <li>Videos (MP4, AVI, MOV, etc.)</li>
+                        <li>Documentos (PDF, DOCX, PPTX, etc.)</li>
+                        <li>Imágenes de portada</li>
+                    </ul>
+                </li>
+                <li><strong>Sistema de aprobación</strong> - Los administradores deben aprobar los cursos antes de ser públicos</li>
+                <li><strong>Edición y actualización</strong> - Los instructores pueden modificar sus cursos en cualquier momento</li>
+            </ul>
+            
+            <h2>3.3 Catálogo y Búsqueda</h2>
+            <ul>
+                <li><strong>Vista de catálogo completo</strong> - Todos los cursos disponibles en tarjetas visuales</li>
+                <li><strong>Búsqueda por texto</strong> - Buscar por nombre de curso o palabras clave</li>
+                <li><strong>Filtros avanzados</strong>:
+                    <ul>
+                        <li>Por categoría (Desarrollo, Diseño, Marketing, etc.)</li>
+                        <li>Por idioma del curso</li>
+                        <li>Por nivel (Básico, Intermedio, Avanzado)</li>
+                        <li>Por instructor</li>
+                        <li>Por rango de precio</li>
+                    </ul>
+                </li>
+                <li><strong>Ordenamiento</strong> - Por popularidad, precio, calificación, o fecha</li>
+            </ul>
+            
+            <h2>3.4 Sistema de Compras</h2>
+            <ul>
+                <li><strong>Carrito de compras</strong> - Agregar múltiples cursos antes de comprar</li>
+                <li><strong>Checkout simplificado</strong> - Proceso de pago simulado</li>
+                <li><strong>Registro de compras</strong> - Historial de todas las transacciones</li>
+                <li><strong>Acceso inmediato</strong> - Los cursos comprados aparecen al instante en "Mis Cursos"</li>
+                <li><strong>Prevención de duplicados</strong> - No puedes comprar el mismo curso dos veces</li>
+            </ul>
+            
+            <h2>3.5 Experiencia de Aprendizaje</h2>
+            <ul>
+                <li><strong>Visualizador de contenido</strong>:
+                    <ul>
+                        <li>Reproductor de video integrado</li>
+                        <li>Visor de documentos PDF</li>
+                        <li>Descarga de archivos complementarios</li>
+                    </ul>
+                </li>
+                <li><strong>Navegación por lecciones</strong> - Botones de anterior/siguiente</li>
+                <li><strong>Seguimiento de progreso</strong>:
+                    <ul>
+                        <li>Marcar lecciones como completadas</li>
+                        <li>Barra de progreso visual</li>
+                        <li>Porcentaje de avance del curso</li>
+                    </ul>
+                </li>
+                <li><strong>Lista de lecciones</strong> - Sidebar con todas las lecciones y su estado</li>
+            </ul>
+            
+            <h2>3.6 Reseñas y Calificaciones</h2>
+            <ul>
+                <li><strong>Sistema de estrellas</strong> - Calificación de 1 a 5 estrellas</li>
+                <li><strong>Comentarios escritos</strong> - Los estudiantes pueden dejar opiniones detalladas</li>
+                <li><strong>Calificación promedio</strong> - Calculada automáticamente y visible en el catálogo</li>
+                <li><strong>Fecha de publicación</strong> - Cuándo se dejó cada reseña</li>
+                <li><strong>Filtro de calidad</strong> - Solo estudiantes que compraron el curso pueden calificarlo</li>
+            </ul>
+            
+            <h2>3.7 Panel de Administración</h2>
+            <ul>
+                <li><strong>Dashboard con estadísticas</strong>:
+                    <ul>
+                        <li>Total de usuarios registrados</li>
+                        <li>Total de cursos en la plataforma</li>
+                        <li>Ingresos totales generados</li>
+                        <li>Cursos pendientes de aprobación</li>
+                    </ul>
+                </li>
+                <li><strong>Gestión de usuarios</strong>:
+                    <ul>
+                        <li>Ver lista completa de usuarios</li>
+                        <li>Activar/desactivar cuentas</li>
+                        <li>Cambiar roles (convertir aprendiz en capacitador)</li>
+                        <li>Eliminar usuarios problemáticos</li>
+                    </ul>
+                </li>
+                <li><strong>Gestión de cursos</strong>:
+                    <ul>
+                        <li>Aprobar o rechazar cursos nuevos</li>
+                        <li>Despublicar cursos inapropiados</li>
+                        <li>Ver detalles completos de cualquier curso</li>
+                    </ul>
+                </li>
+                <li><strong>Categorías</strong>:
+                    <ul>
+                        <li>Crear nuevas categorías</li>
+                        <li>Editar categorías existentes</li>
+                        <li>Activar/desactivar categorías</li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
+        <!-- 4. ROLES Y USUARIOS -->
+        <div class="section" id="roles">
+            <h1>4. 👥 Tipos de Usuarios y sus Funciones</h1>
+            
+            <p>La plataforma cuenta con tres tipos de usuarios, cada uno con permisos y funcionalidades específicas:</p>
+            
+            <!-- ROL 1: APRENDIZ -->
+            <div class="role-card">
+                <h3><span class="role-icon">👨‍🎓</span> Aprendiz (Estudiante)</h3>
+                
+                <h4>¿Quién es?</h4>
+                <p>Es el usuario que desea aprender. Busca cursos, los compra y consume el contenido educativo.</p>
+                
+                <h4>¿Qué puede hacer?</h4>
+                <table>
+                    <tr>
+                        <th>Acción</th>
+                        <th>Descripción</th>
+                    </tr>
+                    <tr>
+                        <td>Explorar catálogo</td>
+                        <td>Ver todos los cursos disponibles con filtros y búsqueda</td>
+                    </tr>
+                    <tr>
+                        <td>Ver detalles de curso</td>
+                        <td>Descripción completa, temario, instructor, reseñas</td>
+                    </tr>
+                    <tr>
+                        <td>Agregar al carrito</td>
+                        <td>Seleccionar múltiples cursos antes de comprar</td>
+                    </tr>
+                    <tr>
+                        <td>Comprar cursos</td>
+                        <td>Realizar el pago y obtener acceso inmediato</td>
+                    </tr>
+                    <tr>
+                        <td>Acceder a mis cursos</td>
+                        <td>Ver todos los cursos que ha comprado</td>
+                    </tr>
+                    <tr>
+                        <td>Ver lecciones</td>
+                        <td>Reproducir videos, leer documentos, descargar archivos</td>
+                    </tr>
+                    <tr>
+                        <td>Marcar progreso</td>
+                        <td>Indicar qué lecciones ha completado</td>
+                    </tr>
+                    <tr>
+                        <td>Dejar reseñas</td>
+                        <td>Calificar y comentar sobre los cursos comprados</td>
+                    </tr>
+                    <tr>
+                        <td>Gestionar perfil</td>
+                        <td>Actualizar foto, nombre, biografía, país, idioma</td>
+                    </tr>
+                </table>
+                
+                <h4>Ejemplo de uso típico:</h4>
+                <ol class="steps">
+                    <li>María se registra como Aprendiz</li>
+                    <li>Busca cursos de "Desarrollo Web"</li>
+                    <li>Encuentra 3 cursos interesantes y los agrega al carrito</li>
+                    <li>Realiza la compra</li>
+                    <li>Accede a "Mis Cursos" y comienza a ver las lecciones</li>
+                    <li>Marca las lecciones completadas mientras avanza</li>
+                    <li>Al terminar, deja una reseña de 5 estrellas</li>
+                </ol>
+            </div>
+            
+            <!-- ROL 2: CAPACITADOR -->
+            <div class="role-card">
+                <h3><span class="role-icon">👨‍🏫</span> Capacitador (Instructor)</h3>
+                
+                <h4>¿Quién es?</h4>
+                <p>Es el usuario que crea y publica cursos. Comparte su conocimiento a cambio de ingresos.</p>
+                
+                <h4>¿Qué puede hacer?</h4>
+                <table>
+                    <tr>
+                        <th>Acción</th>
+                        <th>Descripción</th>
+                    </tr>
+                    <tr>
+                        <td>Crear cursos</td>
+                        <td>Definir título, descripción, precio, idioma, nivel, categoría</td>
+                    </tr>
+                    <tr>
+                        <td>Crear módulos</td>
+                        <td>Organizar el curso en secciones temáticas</td>
+                    </tr>
+                    <tr>
+                        <td>Crear lecciones</td>
+                        <td>Agregar videos, documentos y contenido educativo</td>
+                    </tr>
+                    <tr>
+                        <td>Subir archivos</td>
+                        <td>Videos (hasta 2GB), documentos, imágenes</td>
+                    </tr>
+                    <tr>
+                        <td>Editar cursos</td>
+                        <td>Actualizar información, agregar/eliminar lecciones</td>
+                    </tr>
+                    <tr>
+                        <td>Publicar/Despublicar</td>
+                        <td>Hacer el curso visible o invisible en el catálogo</td>
+                    </tr>
+                    <tr>
+                        <td>Ver estadísticas</td>
+                        <td>Número de estudiantes, ingresos, calificaciones</td>
+                    </tr>
+                    <tr>
+                        <td>Ver reseñas</td>
+                        <td>Leer los comentarios de sus estudiantes</td>
+                    </tr>
+                    <tr>
+                        <td>Gestionar perfil</td>
+                        <td>Actualizar información pública como instructor</td>
+                    </tr>
+                </table>
+                
+                <h4>Ejemplo de uso típico:</h4>
+                <ol class="steps">
+                    <li>Juan se registra como Capacitador</li>
+                    <li>Hace clic en "Crear Curso"</li>
+                    <li>Llena los datos: "Python para Principiantes", $50 USD, Español, Básico</li>
+                    <li>Crea 3 módulos: "Introducción", "Variables", "Funciones"</li>
+                    <li>En cada módulo, agrega varias lecciones con videos explicativos</li>
+                    <li>Sube un PDF con ejercicios</li>
+                    <li>Marca el curso como "Publicado"</li>
+                    <li>Espera la aprobación del administrador</li>
+                    <li>El curso aparece en el catálogo y estudiantes comienzan a comprarlo</li>
+                </ol>
+            </div>
+            
+            <!-- ROL 3: ADMINISTRADOR -->
+            <div class="role-card">
+                <h3><span class="role-icon">👨‍💼</span> Administrador</h3>
+                
+                <h4>¿Quién es?</h4>
+                <p>Es el usuario con máximos privilegios. Supervisa y gestiona toda la plataforma.</p>
+                
+                <h4>¿Qué puede hacer?</h4>
+                <table>
+                    <tr>
+                        <th>Acción</th>
+                        <th>Descripción</th>
+                    </tr>
+                    <tr>
+                        <td>Ver dashboard completo</td>
+                        <td>Estadísticas globales de usuarios, cursos, ingresos</td>
+                    </tr>
+                    <tr>
+                        <td>Gestionar usuarios</td>
+                        <td>Ver, editar, activar/desactivar, eliminar usuarios</td>
+                    </tr>
+                    <tr>
+                        <td>Cambiar roles</td>
+                        <td>Convertir aprendices en capacitadores o viceversa</td>
+                    </tr>
+                    <tr>
+                        <td>Aprobar cursos</td>
+                        <td>Revisar y aprobar cursos antes de publicarlos</td>
+                    </tr>
+                    <tr>
+                        <td>Rechazar cursos</td>
+                        <td>Denegar cursos de baja calidad o inapropiados</td>
+                    </tr>
+                    <tr>
+                        <td>Despublicar cursos</td>
+                        <td>Quitar del catálogo cursos problemáticos</td>
+                    </tr>
+                    <tr>
+                        <td>Gestionar categorías</td>
+                        <td>Crear, editar, activar/desactivar categorías</td>
+                    </tr>
+                    <tr>
+                        <td>Ver todo el contenido</td>
+                        <td>Acceso a cualquier curso sin necesidad de comprarlo</td>
+                    </tr>
+                    <tr>
+                        <td>Moderar reseñas</td>
+                        <td>Eliminar comentarios ofensivos o spam</td>
+                    </tr>
+                </table>
+                
+                <h4>Ejemplo de uso típico:</h4>
+                <ol class="steps">
+                    <li>El administrador inicia sesión</li>
+                    <li>Ve que hay 5 cursos pendientes de aprobación</li>
+                    <li>Revisa cada curso: contenido, descripción, calidad</li>
+                    <li>Aprueba 4 cursos de buena calidad</li>
+                    <li>Rechaza 1 curso por contenido inapropiado</li>
+                    <li>Revisa reportes de un usuario problemático</li>
+                    <li>Desactiva la cuenta del usuario</li>
+                    <li>Crea una nueva categoría: "Inteligencia Artificial"</li>
+                </ol>
+            </div>
+        </div>
+
+        <!-- 5. FUNCIONALIDADES DETALLADAS -->
+        <div class="section" id="funcionalidades">
+            <h1>5. 🔧 Funcionalidades Detalladas</h1>
+            
+            <h2>5.1 Proceso de Registro y Login</h2>
+            
+            <h3>Registro de nuevo usuario</h3>
+            <div class="info-box blue">
+                <ol>
+                    <li>El usuario accede a la página principal</li>
+                    <li>Hace clic en "Registrarse"</li>
+                    <li>Completa el formulario:
+                        <ul>
+                            <li>Nombre completo</li>
+                            <li>Email (debe ser único)</li>
+                            <li>Contraseña (mínimo 6 caracteres)</li>
+                            <li>País de residencia</li>
+                            <li>Idioma preferido</li>
+                            <li>Tipo de usuario (Aprendiz o Capacitador)</li>
+                        </ul>
+                    </li>
+                    <li>El sistema valida los datos</li>
+                    <li>La contraseña se encripta antes de guardarse</li>
+                    <li>El usuario es redirigido al login</li>
+                </ol>
+            </div>
+            
+            <h3>Inicio de sesión</h3>
+            <div class="info-box blue">
+                <ol>
+                    <li>El usuario ingresa email y contraseña</li>
+                    <li>El sistema verifica las credenciales</li>
+                    <li>Si son correctas, se crea una sesión</li>
+                    <li>El usuario es redirigido a su dashboard según su rol</li>
+                </ol>
+            </div>
+            
+            <h2>5.2 Creación de un Curso (Paso a Paso)</h2>
+            
+            <h3>Paso 1: Información básica</h3>
+            <ul>
+                <li><strong>Título:</strong> Nombre atractivo del curso (ej: "JavaScript Desde Cero")</li>
+                <li><strong>Descripción:</strong> Explicación detallada de qué aprenderán</li>
+                <li><strong>Categoría:</strong> Desarrollo, Diseño, Marketing, etc.</li>
+                <li><strong>Idioma:</strong> En qué idioma está el contenido</li>
+                <li><strong>Nivel:</strong> Básico, Intermedio o Avanzado</li>
+                <li><strong>Precio:</strong> Cuánto costará el curso</li>
+                <li><strong>Moneda:</strong> USD, EUR, MXN, etc.</li>
+            </ul>
+            
+            <h3>Paso 2: Imagen de portada</h3>
+            <ul>
+                <li>Subir una imagen atractiva (JPG, PNG)</li>
+                <li>Dimensiones recomendadas: 1280x720 px</li>
+                <li>Esta imagen aparece en el catálogo</li>
+            </ul>
+            
+            <h3>Paso 3: Crear módulos</h3>
+            <ul>
+                <li>Los módulos son secciones temáticas del curso</li>
+                <li>Ejemplo: "Módulo 1: Introducción", "Módulo 2: Variables", etc.</li>
+                <li>Cada módulo tiene un título y orden</li>
+            </ul>
+            
+            <h3>Paso 4: Crear lecciones</h3>
+            <ul>
+                <li>Cada lección pertenece a un módulo</li>
+                <li>Información de cada lección:
+                    <ul>
+                        <li><strong>Título:</strong> Nombre de la lección</li>
+                        <li><strong>Tipo de contenido:</strong> Video o Documento</li>
+                        <li><strong>Orden:</strong> Posición dentro del módulo</li>
+                        <li><strong>Archivo:</strong> Video o documento a subir</li>
+                    </ul>
+                </li>
+            </ul>
+            
+            <h3>Paso 5: Publicación</h3>
+            <ul>
+                <li>Una vez completado, el instructor marca el curso como "Publicado"</li>
+                <li>El curso queda en estado "Pendiente de aprobación"</li>
+                <li>Un administrador debe aprobarlo antes de aparecer en el catálogo</li>
+            </ul>
+            
+            <h2>5.3 Compra de un Curso</h2>
+            
+            <div class="info-box green">
+                <h4>Flujo de compra:</h4>
+                <ol>
+                    <li><strong>Explorar:</strong> El estudiante navega el catálogo</li>
+                    <li><strong>Ver detalles:</strong> Hace clic en un curso para ver información completa</li>
+                    <li><strong>Agregar al carrito:</strong> Botón "Añadir al carrito"</li>
+                    <li><strong>Continuar comprando:</strong> Puede agregar más cursos o ir al carrito</li>
+                    <li><strong>Ver carrito:</strong> Lista de cursos seleccionados con total</li>
+                    <li><strong>Proceder al pago:</strong> Botón "Comprar ahora"</li>
+                    <li><strong>Confirmación:</strong> Simulación de pago exitoso</li>
+                    <li><strong>Acceso inmediato:</strong> Los cursos aparecen en "Mis Cursos"</li>
+                </ol>
+            </div>
+            
+            <h2>5.4 Experiencia de Aprendizaje</h2>
+            
+            <h3>Visualización de lecciones</h3>
+            <div class="info-box purple">
+                <p><strong>Para videos:</strong></p>
+                <ul>
+                    <li>Reproductor HTML5 integrado</li>
+                    <li>Controles de play/pausa, volumen, pantalla completa</li>
+                    <li>El video se carga desde el servidor local</li>
+                </ul>
+                
+                <p><strong>Para documentos:</strong></p>
+                <ul>
+                    <li>Visualización en el navegador (PDF)</li>
+                    <li>Opción de descarga para otros formatos</li>
+                    <li>Botón de descarga visible</li>
+                </ul>
+            </div>
+            
+            <h3>Seguimiento de progreso</h3>
+            <ul>
+                <li>Checkbox para marcar lección como completada</li>
+                <li>El sistema guarda el estado en la base de datos</li>
+                <li>Barra de progreso muestra porcentaje completado</li>
+                <li>Lista de lecciones indica cuáles están completadas (✓)</li>
+            </ul>
+            
+            <h2>5.5 Sistema de Reseñas</h2>
+            
+            <h3>Dejar una reseña</h3>
+            <ul>
+                <li>Solo estudiantes que compraron el curso pueden calificar</li>
+                <li>Seleccionar calificación de 1 a 5 estrellas</li>
+                <li>Escribir comentario (opcional)</li>
+                <li>La reseña aparece públicamente en la página del curso</li>
+            </ul>
+            
+            <h3>Ver reseñas</h3>
+            <ul>
+                <li>Cualquier visitante puede leer las reseñas</li>
+                <li>Se muestra: nombre del estudiante, calificación, comentario, fecha</li>
+                <li>Promedio de calificaciones en estrellas</li>
+            </ul>
+        </div>
+
+        <!-- 6. CÓMO USAR -->
+        <div class="section" id="como-usar">
+            <h1>6. 📱 Cómo Usar la Plataforma</h1>
+            
+            <h2>6.1 Para Estudiantes</h2>
+            
+            <h3>Primer acceso</h3>
+            <ol class="steps">
+                <li><strong>Registrarse:</strong> Ir a la página principal y hacer clic en "Registrarse", completar el formulario seleccionando "Aprendiz"</li>
+                <li><strong>Iniciar sesión:</strong> Usar email y contraseña registrados</li>
+                <li><strong>Completar perfil:</strong> Ir a "Mi Perfil" y agregar foto, biografía, etc.</li>
+            </ol>
+            
+            <h3>Buscar y comprar cursos</h3>
+            <ol class="steps">
+                <li><strong>Explorar catálogo:</strong> Desde el dashboard o menú principal</li>
+                <li><strong>Usar filtros:</strong> Seleccionar categoría, idioma, nivel deseado</li>
+                <li><strong>Ver detalles:</strong> Clic en un curso para ver descripción completa, temario, reseñas</li>
+                <li><strong>Agregar al carrito:</strong> Botón "Añadir al carrito"</li>
+                <li><strong>Ir al carrito:</strong> Icono de carrito en la esquina superior</li>
+                <li><strong>Comprar:</strong> Botón "Proceder al pago" y confirmar</li>
+            </ol>
+            
+            <h3>Tomar un curso</h3>
+            <ol class="steps">
+                <li><strong>Ir a "Mis Cursos":</strong> Desde el dashboard</li>
+                <li><strong>Seleccionar un curso:</strong> Clic en "Ver Curso"</li>
+                <li><strong>Elegir una lección:</strong> Desde la lista lateral</li>
+                <li><strong>Ver contenido:</strong> Video o documento se carga automáticamente</li>
+                <li><strong>Marcar como completada:</strong> Checkbox al terminar</li>
+                <li><strong>Navegar:</strong> Botones "Anterior" y "Siguiente"</li>
+            </ol>
+            
+            <h3>Dejar una reseña</h3>
+            <ol class="steps">
+                <li><strong>Terminar el curso:</strong> Ver la mayoría de las lecciones</li>
+                <li><strong>Ir a la página del curso:</strong> Desde "Mis Cursos"</li>
+                <li><strong>Scroll hasta "Reseñas":</strong> Al final de la página</li>
+                <li><strong>Seleccionar estrellas:</strong> De 1 a 5</li>
+                <li><strong>Escribir comentario:</strong> Opcional</li>
+                <li><strong>Enviar:</strong> Botón "Publicar Reseña"</li>
+            </ol>
+            
+            <h2>6.2 Para Instructores</h2>
+            
+            <h3>Crear tu primer curso</h3>
+            <ol class="steps">
+                <li><strong>Registrarse como Capacitador:</strong> Seleccionar "Capacitador" al registrarse</li>
+                <li><strong>Ir a "Mis Cursos":</strong> Desde el dashboard de capacitador</li>
+                <li><strong>Clic en "Crear Nuevo Curso":</strong> Botón verde destacado</li>
+                <li><strong>Completar información básica:</strong>
+                    <ul>
+                        <li>Título atractivo y descriptivo</li>
+                        <li>Descripción completa (qué aprenderán, requisitos previos)</li>
+                        <li>Seleccionar categoría apropiada</li>
+                        <li>Definir idioma del contenido</li>
+                        <li>Establecer nivel de dificultad</li>
+                        <li>Fijar precio (puedes poner $0 para curso gratuito)</li>
+                    </ul>
+                </li>
+                <li><strong>Subir imagen de portada:</strong> Imagen atractiva y profesional</li>
+                <li><strong>Guardar borrador:</strong> El curso se guarda pero no se publica aún</li>
+            </ol>
+            
+            <h3>Agregar contenido</h3>
+            <ol class="steps">
+                <li><strong>Editar el curso:</strong> Botón "Editar" junto al curso</li>
+                <li><strong>Crear módulos:</strong>
+                    <ul>
+                        <li>Clic en "Agregar Módulo"</li>
+                        <li>Nombre descriptivo (ej: "Módulo 1: Fundamentos")</li>
+                        <li>Definir orden de aparición</li>
+                    </ul>
+                </li>
+                <li><strong>Agregar lecciones a cada módulo:</strong>
+                    <ul>
+                        <li>Seleccionar el módulo</li>
+                        <li>Clic en "Agregar Lección"</li>
+                        <li>Título de la lección</li>
+                        <li>Tipo: Video o Documento</li>
+                        <li>Subir archivo (importante: verificar límites de tamaño)</li>
+                        <li>Orden dentro del módulo</li>
+                    </ul>
+                </li>
+                <li><strong>Repetir:</strong> Hasta completar todo el temario</li>
+            </ol>
+            
+            <h3>Publicar el curso</h3>
+            <ol class="steps">
+                <li><strong>Revisar todo:</strong> Verificar que el contenido esté completo</li>
+                <li><strong>Marcar como "Publicado":</strong> Switch o checkbox de publicación</li>
+                <li><strong>Esperar aprobación:</strong> Un administrador revisará el curso</li>
+                <li><strong>Notificación:</strong> Recibirás confirmación cuando sea aprobado</li>
+                <li><strong>Disponible en catálogo:</strong> Los estudiantes podrán comprarlo</li>
+            </ol>
+            
+            <h3>Gestionar tus cursos</h3>
+            <ul>
+                <li><strong>Ver estadísticas:</strong> Número de estudiantes inscritos, calificación promedio</li>
+                <li><strong>Editar contenido:</strong> Agregar nuevas lecciones o actualizar existentes</li>
+                <li><strong>Leer reseñas:</strong> Retroalimentación de tus estudiantes</li>
+                <li><strong>Despublicar:</strong> Quitar temporalmente del catálogo</li>
+            </ul>
+            
+            <h2>6.3 Para Administradores</h2>
+            
+            <h3>Aprobar cursos</h3>
+            <ol class="steps">
+                <li><strong>Ir a "Gestión de Cursos":</strong> Panel de administración</li>
+                <li><strong>Filtrar "Pendientes de aprobación":</strong> Ver solo cursos nuevos</li>
+                <li><strong>Revisar cada curso:</strong>
+                    <ul>
+                        <li>Leer descripción</li>
+                        <li>Verificar que tiene contenido</li>
+                        <li>Comprobar calidad mínima</li>
+                        <li>Asegurar que no sea inapropiado</li>
+                    </ul>
+                </li>
+                <li><strong>Aprobar o Rechazar:</strong> Botones correspondientes</li>
+                <li><strong>Curso aprobado:</strong> Aparece automáticamente en el catálogo</li>
+            </ol>
+            
+            <h3>Gestionar usuarios</h3>
+            <ol class="steps">
+                <li><strong>Ver lista de usuarios:</strong> Desde el panel admin</li>
+                <li><strong>Buscar usuario:</strong> Por nombre o email</li>
+                <li><strong>Acciones disponibles:</strong>
+                    <ul>
+                        <li>Activar/Desactivar cuenta</li>
+                        <li>Cambiar rol (aprendiz ↔ capacitador)</li>
+                        <li>Ver historial de compras o cursos creados</li>
+                        <li>Eliminar usuario (en casos extremos)</li>
+                    </ul>
+                </li>
+            </ol>
+            
+            <h3>Crear categorías</h3>
+            <ol class="steps">
+                <li><strong>Ir a "Categorías":</strong> Sección en panel admin</li>
+                <li><strong>Clic en "Nueva Categoría":</strong></li>
+                <li><strong>Completar:</strong>
+                    <ul>
+                        <li>Nombre (ej: "Inteligencia Artificial")</li>
+                        <li>Descripción breve</li>
+                    </ul>
+                </li>
+                <li><strong>Guardar:</strong> La categoría estará disponible al crear cursos</li>
+            </ol>
+        </div>
+
+        <!-- 7. ARQUITECTURA TÉCNICA -->
+        <div class="section" id="arquitectura">
+            <h1>7. 🏗️ Arquitectura Técnica</h1>
+            
+            <div class="info-box orange">
+                <p><strong>Nota:</strong> Esta sección explica cómo funciona el sistema técnicamente de forma simplificada. Si no eres programador, puedes saltarte los detalles técnicos.</p>
+            </div>
+            
+            <h2>7.1 Tecnologías Utilizadas</h2>
+            
+            <table>
+                <tr>
+                    <th>Tecnología</th>
+                    <th>Propósito</th>
+                    <th>¿Qué es?</th>
+                </tr>
+                <tr>
+                    <td>PHP 7.4+</td>
+                    <td>Backend / Lógica del servidor</td>
+                    <td>Lenguaje de programación que procesa peticiones y genera páginas dinámicas</td>
+                </tr>
+                <tr>
+                    <td>MySQL</td>
+                    <td>Base de datos</td>
+                    <td>Sistema que almacena toda la información (usuarios, cursos, compras, etc.)</td>
+                </tr>
+                <tr>
+                    <td>HTML5</td>
+                    <td>Estructura de páginas</td>
+                    <td>Lenguaje de marcado que define el contenido de las páginas web</td>
+                </tr>
+                <tr>
+                    <td>CSS3</td>
+                    <td>Diseño visual</td>
+                    <td>Define colores, fuentes, espaciados y apariencia general</td>
+                </tr>
+                <tr>
+                    <td>JavaScript</td>
+                    <td>Interactividad</td>
+                    <td>Hace que las páginas sean dinámicas y respondan a acciones del usuario</td>
+                </tr>
+                <tr>
+                    <td>XAMPP</td>
+                    <td>Servidor local</td>
+                    <td>Paquete que incluye Apache (servidor web) y MySQL en tu computadora</td>
+                </tr>
+            </table>
+            
+            <h2>7.2 Arquitectura MVC</h2>
+            
+            <p>El proyecto sigue el patrón <strong>Modelo-Vista-Controlador (MVC)</strong>, que separa la aplicación en tres capas:</p>
+            
+            <div class="features-grid">
+                <div class="feature-card">
+                    <h4>📦 Modelo (Model)</h4>
+                    <p><strong>Carpeta:</strong> <code>models/</code></p>
+                    <p>Representa los datos y la lógica de negocio. Se comunica con la base de datos.</p>
+                    <p><strong>Ejemplo:</strong> <code>Curso.php</code> tiene métodos para crear, editar, eliminar cursos.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <h4>👁️ Vista (View)</h4>
+                    <p><strong>Carpeta:</strong> <code>views/</code></p>
+                    <p>Presenta la información al usuario. Son las páginas HTML que ves en el navegador.</p>
+                    <p><strong>Ejemplo:</strong> <code>ver-curso.php</code> muestra la interfaz del curso.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <h4>🎮 Controlador (Controller)</h4>
+                    <p><strong>Carpeta:</strong> <code>controllers/</code></p>
+                    <p>Coordina entre Modelo y Vista. Recibe peticiones del usuario y decide qué hacer.</p>
+                    <p><strong>Ejemplo:</strong> <code>AprendizController.php</code> maneja acciones de estudiantes.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <h4>⚙️ Configuración (Config)</h4>
+                    <p><strong>Carpeta:</strong> <code>config/</code></p>
+                    <p>Configuraciones globales como conexión a base de datos.</p>
+                    <p><strong>Ejemplo:</strong> <code>Database.php</code> establece la conexión a MySQL.</p>
+                </div>
+            </div>
+            
+            <h2>7.3 Estructura de la Base de Datos</h2>
+            
+            <p>La base de datos contiene 9 tablas principales:</p>
+            
+            <table>
+                <tr>
+                    <th>Tabla</th>
+                    <th>Descripción</th>
+                    <th>Datos que guarda</th>
+                </tr>
+                <tr>
+                    <td>usuarios</td>
+                    <td>Información de usuarios</td>
+                    <td>Nombre, email, contraseña, rol, país, idioma, foto</td>
+                </tr>
+                <tr>
+                    <td>categorias</td>
+                    <td>Categorías de cursos</td>
+                    <td>Nombre, descripción</td>
+                </tr>
+                <tr>
+                    <td>cursos</td>
+                    <td>Información de cursos</td>
+                    <td>Título, descripción, precio, idioma, nivel, instructor, categoría</td>
+                </tr>
+                <tr>
+                    <td>modulos</td>
+                    <td>Módulos de cada curso</td>
+                    <td>Nombre, orden, curso al que pertenece</td>
+                </tr>
+                <tr>
+                    <td>lecciones</td>
+                    <td>Lecciones de cada módulo</td>
+                    <td>Título, tipo (video/documento), archivo, orden, módulo</td>
+                </tr>
+                <tr>
+                    <td>compras</td>
+                    <td>Registro de transacciones</td>
+                    <td>Usuario, curso, precio pagado, fecha</td>
+                </tr>
+                <tr>
+                    <td>progreso</td>
+                    <td>Avance de estudiantes</td>
+                    <td>Usuario, lección, si está completada, fecha</td>
+                </tr>
+                <tr>
+                    <td>resenas</td>
+                    <td>Calificaciones y comentarios</td>
+                    <td>Usuario, curso, calificación (1-5), comentario, fecha</td>
+                </tr>
+                <tr>
+                    <td>carrito</td>
+                    <td>Cursos en carrito de compra</td>
+                    <td>Usuario, curso, fecha agregado</td>
+                </tr>
+            </table>
+            
+            <h2>7.4 Flujo de una Petición</h2>
+            
+            <div class="info-box blue">
+                <h4>Ejemplo: Un estudiante quiere ver un curso</h4>
+                <ol>
+                    <li><strong>Usuario:</strong> Hace clic en "Ver Curso" en su navegador</li>
+                    <li><strong>Navegador:</strong> Envía petición HTTP a <code>index.php?controller=aprendiz&action=ver-curso&id=5</code></li>
+                    <li><strong>index.php:</strong> Recibe la petición y la dirige al controlador correcto</li>
+                    <li><strong>AprendizController:</strong> Método <code>verCurso()</code> se ejecuta</li>
+                    <li><strong>Modelo Curso:</strong> Consulta la base de datos para obtener información del curso con ID 5</li>
+                    <li><strong>Modelo Modulo:</strong> Obtiene los módulos de ese curso</li>
+                    <li><strong>Modelo Leccion:</strong> Obtiene las lecciones de cada módulo</li>
+                    <li><strong>Controlador:</strong> Pasa toda esa información a la vista</li>
+                    <li><strong>Vista ver-curso.php:</strong> Genera el HTML con la información</li>
+                    <li><strong>Navegador:</strong> Recibe el HTML y lo muestra al usuario</li>
+                </ol>
+            </div>
+            
+            <h2>7.5 Seguridad Implementada</h2>
+            
+            <ul>
+                <li><strong>Contraseñas encriptadas:</strong> Se usa <code>password_hash()</code> para guardar contraseñas de forma segura</li>
+                <li><strong>Sesiones PHP:</strong> Para mantener usuarios autenticados</li>
+                <li><strong>Validación de permisos:</strong> Cada acción verifica que el usuario tenga el rol adecuado</li>
+                <li><strong>Protección CSRF:</strong> (Opcional) Tokens para evitar ataques de falsificación</li>
+                <li><strong>Sanitización de inputs:</strong> Limpieza de datos antes de guardarlos en la base de datos</li>
+                <li><strong>Validación de archivos:</strong> Verificar tipo y tamaño de archivos subidos</li>
+            </ul>
+            
+            <h2>7.6 Organización de Archivos</h2>
+            
+            <div class="code-block">
+cursosonline/
+├── index.php                  # Punto de entrada principal
+├── config/
+│   ├── config.php            # Configuración general
+│   ├── Database.php          # Conexión a BD
+│   └── Email.php             # Configuración de emails
+├── controllers/              # Lógica de control
+│   ├── HomeController.php
+│   ├── AuthController.php
+│   ├── AprendizController.php
+│   ├── CapacitadorController.php
+│   ├── AdminController.php
+│   └── CarritoController.php
+├── models/                   # Lógica de datos
+│   ├── Usuario.php
+│   ├── Curso.php
+│   ├── Categoria.php
+│   ├── Modulo.php
+│   ├── Leccion.php
+│   ├── Compra.php
+│   ├── Progreso.php
+│   ├── Resena.php
+│   └── Carrito.php
+├── views/                    # Interfaz de usuario
+│   ├── layout/
+│   │   └── header.php        # Menú de navegación
+│   ├── home/
+│   │   ├── index.php         # Página principal
+│   │   └── curso.php         # Detalles de curso
+│   ├── auth/
+│   │   ├── login.php         # Iniciar sesión
+│   │   └── registro.php      # Registro
+│   ├── aprendiz/
+│   │   ├── dashboard.php     # Panel del estudiante
+│   │   ├── mis-cursos.php    # Cursos comprados
+│   │   ├── ver-curso.php     # Vista del curso
+│   │   ├── ver-leccion.php   # Vista de lección
+│   │   └── perfil.php        # Perfil
+│   ├── capacitador/
+│   │   ├── dashboard.php     # Panel del instructor
+│   │   ├── mis-cursos.php    # Cursos creados
+│   │   ├── crear-curso.php   # Crear nuevo curso
+│   │   └── editar-curso.php  # Editar curso
+│   ├── admin/
+│   │   ├── dashboard.php     # Panel admin
+│   │   ├── usuarios.php      # Gestión usuarios
+│   │   ├── cursos.php        # Gestión cursos
+│   │   └── estadisticas.php  # Estadísticas
+│   └── carrito/
+│       ├── index.php         # Ver carrito
+│       └── checkout.php      # Proceso de compra
+├── assets/
+│   ├── css/
+│   │   └── style.css         # Estilos
+│   └── images/               # Imágenes generales
+├── uploads/                  # Archivos subidos
+│   ├── videos/               # Videos de lecciones
+│   └── documentos/           # PDFs y documentos
+└── database/
+    └── schema.sql            # Script de creación de BD
+            </div>
+        </div>
+
+        <!-- 8. INSTALACIÓN -->
+        <div class="section" id="instalacion">
+            <h1>8. 💻 Guía de Instalación</h1>
+            
+            <div class="info-box orange">
+                <h4>⚠️ Requisitos previos</h4>
+                <ul>
+                    <li>Computadora con Windows, macOS o Linux</li>
+                    <li>Al menos 2GB de espacio libre en disco</li>
+                    <li>Conexión a internet para descargar XAMPP</li>
+                </ul>
+            </div>
+            
+            <h2>8.1 Instalar XAMPP</h2>
+            
+            <ol class="steps">
+                <li><strong>Descargar XAMPP:</strong>
+                    <ul>
+                        <li>Ir a <code>apachefriends.org</code></li>
+                        <li>Descargar la versión para tu sistema operativo</li>
+                        <li>Versión recomendada: PHP 7.4 o superior</li>
+                    </ul>
+                </li>
+                <li><strong>Instalar XAMPP:</strong>
+                    <ul>
+                        <li>Ejecutar el instalador descargado</li>
+                        <li>Elegir componentes: Apache, MySQL, PHP (mínimo necesario)</li>
+                        <li>Carpeta de instalación: dejar por defecto (<code>C:\xampp</code> en Windows)</li>
+                        <li>Completar la instalación</li>
+                    </ul>
+                </li>
+                <li><strong>Iniciar XAMPP:</strong>
+                    <ul>
+                        <li>Abrir el Panel de Control de XAMPP</li>
+                        <li>Iniciar Apache (servidor web)</li>
+                        <li>Iniciar MySQL (base de datos)</li>
+                        <li>Ambos deben mostrar fondo verde cuando estén activos</li>
+                    </ul>
+                </li>
+            </ol>
+            
+            <h2>8.2 Configurar el Proyecto</h2>
+            
+            <ol class="steps">
+                <li><strong>Ubicar la carpeta del proyecto:</strong>
+                    <ul>
+                        <li>La carpeta del proyecto debe estar en <code>C:\xampp\htdocs\</code></li>
+                        <li>Ruta completa: <code>C:\xampp\htdocs\cursosonline\</code></li>
+                    </ul>
+                </li>
+                <li><strong>Crear la base de datos:</strong>
+                    <ul>
+                        <li>Abrir navegador e ir a <code>http://localhost/phpmyadmin</code></li>
+                        <li>Clic en "Nueva" en el panel izquierdo</li>
+                        <li>Nombre de la base de datos: <code>marketplace</code></li>
+                        <li>Cotejamiento: <code>utf8mb4_unicode_ci</code></li>
+                        <li>Clic en "Crear"</li>
+                    </ul>
+                </li>
+                <li><strong>Importar el esquema:</strong>
+                    <ul>
+                        <li>Seleccionar la base de datos <code>marketplace</code></li>
+                        <li>Clic en la pestaña "Importar"</li>
+                        <li>Clic en "Seleccionar archivo"</li>
+                        <li>Buscar y seleccionar <code>database/schema.sql</code></li>
+                        <li>Clic en "Continuar"</li>
+                        <li>Esperar a que se importen todas las tablas</li>
+                    </ul>
+                </li>
+                <li><strong>Configurar conexión:</strong>
+                    <ul>
+                        <li>Abrir el archivo <code>config/config.php</code></li>
+                        <li>Verificar que los datos de conexión sean correctos:
+                            <div class="code-block">
+define('DB_HOST', 'localhost');
+define('DB_NAME', 'marketplace');
+define('DB_USER', 'root');
+define('DB_PASS', '');  // Vacío por defecto en XAMPP
+                            </div>
+                        </li>
+                    </ul>
+                </li>
+                <li><strong>Verificar permisos de carpetas:</strong>
+                    <ul>
+                        <li>La carpeta <code>uploads/</code> debe tener permisos de escritura</li>
+                        <li>En Windows generalmente no hay problema</li>
+                        <li>En Linux/Mac: <code>chmod 777 uploads/ -R</code></li>
+                    </ul>
+                </li>
+            </ol>
+            
+            <h2>8.3 Primer Acceso</h2>
+            
+            <ol class="steps">
+                <li><strong>Abrir la aplicación:</strong>
+                    <ul>
+                        <li>En el navegador, ir a <code>http://localhost/cursosonline</code></li>
+                        <li>O si XAMPP usa puerto 8080: <code>http://localhost:8080/cursosonline</code></li>
+                    </ul>
+                </li>
+                <li><strong>Verificar que cargue:</strong>
+                    <ul>
+                        <li>Deberías ver la página principal con el catálogo de cursos</li>
+                        <li>Si hay error, verificar que Apache y MySQL estén iniciados</li>
+                    </ul>
+                </li>
+                <li><strong>Crear usuario administrador (opcional):</strong>
+                    <ul>
+                        <li>Ir a phpMyAdmin</li>
+                        <li>Seleccionar base de datos <code>marketplace</code></li>
+                        <li>Tabla <code>usuarios</code></li>
+                        <li>Insertar un registro con rol "administrador"</li>
+                        <li>O usar el script SQL proporcionado en <code>database/</code></li>
+                    </ul>
+                </li>
+            </ol>
+            
+            <h2>8.4 Solución de Problemas de Instalación</h2>
+            
+            <div class="faq-item">
+                <div class="faq-question">❌ Error: "No se puede conectar a la base de datos"</div>
+                <div class="faq-answer">
+                    <p><strong>Causa:</strong> MySQL no está iniciado o los datos de conexión son incorrectos.</p>
+                    <p><strong>Solución:</strong></p>
+                    <ul>
+                        <li>Verificar que MySQL esté en verde en el Panel de Control de XAMPP</li>
+                        <li>Revisar <code>config/config.php</code> y asegurar que DB_HOST sea "localhost"</li>
+                        <li>Verificar que el nombre de la base de datos sea "marketplace"</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">❌ Error 404: "Página no encontrada"</div>
+                <div class="faq-answer">
+                    <p><strong>Causa:</strong> La ruta al proyecto no es correcta.</p>
+                    <p><strong>Solución:</strong></p>
+                    <ul>
+                        <li>Verificar que la carpeta esté en <code>C:\xampp\htdocs\cursosonline</code></li>
+                        <li>Acceder con la URL correcta: <code>http://localhost/cursosonline</code></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">❌ Apache no inicia en XAMPP</div>
+                <div class="faq-answer">
+                    <p><strong>Causa:</strong> El puerto 80 está ocupado por otro programa (Skype, IIS, etc.).</p>
+                    <p><strong>Solución:</strong></p>
+                    <ul>
+                        <li>Cerrar programas que usen el puerto 80</li>
+                        <li>O cambiar el puerto de Apache a 8080 en la configuración de XAMPP</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">❌ No se pueden subir archivos grandes</div>
+                <div class="faq-answer">
+                    <p><strong>Causa:</strong> Límites de PHP para tamaño de archivos.</p>
+                    <p><strong>Solución:</strong></p>
+                    <ul>
+                        <li>Editar <code>php.ini</code> (desde Panel de XAMPP → Config → PHP)</li>
+                        <li>Cambiar: <code>upload_max_filesize = 2048M</code></li>
+                        <li>Cambiar: <code>post_max_size = 2048M</code></li>
+                        <li>Reiniciar Apache</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- 9. COMPARTIR -->
+        <div class="section" id="compartir">
+            <h1>9. 🌐 Cómo Compartir con Compañeros</h1>
+            
+            <p>Por defecto, tu aplicación solo funciona en tu computadora (<code>localhost</code>). Para que compañeros de la universidad puedan acceder desde sus casas, necesitas exponerla a internet.</p>
+            
+            <h2>9.1 Opción Recomendada: ngrok</h2>
+            
+            <div class="info-box green">
+                <h4>✅ Ventajas de ngrok</h4>
+                <ul>
+                    <li>Gratuito para uso básico</li>
+                    <li>HTTPS automático (conexión segura)</li>
+                    <li>No requiere configurar router</li>
+                    <li>Ideal para demos y pruebas</li>
+                    <li>Configuración en menos de 5 minutos</li>
+                </ul>
+            </div>
+            
+            <h3>Pasos para usar ngrok</h3>
+            
+            <ol class="steps">
+                <li><strong>Descargar ngrok:</strong>
+                    <ul>
+                        <li>Ir a <code>ngrok.com/download</code></li>
+                        <li>Descargar para Windows</li>
+                        <li>Extraer <code>ngrok.exe</code> a una carpeta (ej: <code>C:\ngrok\</code>)</li>
+                    </ul>
+                </li>
+                <li><strong>Crear cuenta gratuita:</strong>
+                    <ul>
+                        <li>Ir a <code>ngrok.com/signup</code></li>
+                        <li>Registrarse con tu email</li>
+                        <li>Confirmar la cuenta</li>
+                    </ul>
+                </li>
+                <li><strong>Obtener el token de autenticación:</strong>
+                    <ul>
+                        <li>Al iniciar sesión, verás un comando con tu token</li>
+                        <li>Algo como: <code>ngrok config add-authtoken XXXXXXXXXXXX</code></li>
+                        <li>Copiar ese comando completo</li>
+                    </ul>
+                </li>
+                <li><strong>Configurar ngrok:</strong>
+                    <ul>
+                        <li>Abrir PowerShell o CMD</li>
+                        <li>Navegar a la carpeta de ngrok: <code>cd C:\ngrok</code></li>
+                        <li>Pegar el comando del token y presionar Enter</li>
+                    </ul>
+                </li>
+                <li><strong>Verificar tu puerto:</strong>
+                    <ul>
+                        <li>Abrir tu navegador</li>
+                        <li>Probar <code>http://localhost:8080/cursosonline</code></li>
+                        <li>Si funciona, tu puerto es 8080</li>
+                        <li>Si no, probar <code>http://localhost/cursosonline</code> (puerto 80)</li>
+                    </ul>
+                </li>
+                <li><strong>Iniciar ngrok con tu puerto:</strong>
+                    <ul>
+                        <li>En la terminal, escribir:
+                            <div class="code-block">
+ngrok http 8080
+# o si tu puerto es 80:
+ngrok http 80
+                            </div>
+                        </li>
+                        <li>Presionar Enter</li>
+                    </ul>
+                </li>
+                <li><strong>Obtener la URL pública:</strong>
+                    <ul>
+                        <li>En la pantalla de ngrok verás:
+                            <div class="code-block">
+Forwarding   https://abc123.ngrok-free.dev -> http://localhost:8080
+                            </div>
+                        </li>
+                        <li>Esa URL (https://abc123.ngrok-free.dev) es tu enlace público</li>
+                    </ul>
+                </li>
+                <li><strong>Compartir con compañeros:</strong>
+                    <ul>
+                        <li>La URL completa sería: <code>https://abc123.ngrok-free.dev/cursosonline</code></li>
+                        <li>Enviar ese enlace por WhatsApp, email, etc.</li>
+                        <li>Tus compañeros pueden acceder desde cualquier lugar</li>
+                    </ul>
+                </li>
+            </ol>
+            
+            <h3>Consideraciones importantes</h3>
+            
+            <div class="info-box orange">
+                <h4>⚠️ Mientras compartes:</h4>
+                <ul>
+                    <li><strong>Tu PC debe estar encendida</strong> - Si la apagas, nadie podrá acceder</li>
+                    <li><strong>XAMPP corriendo</strong> - Apache y MySQL activos</li>
+                    <li><strong>ngrok abierto</strong> - No cerrar esa ventana de terminal</li>
+                    <li><strong>Conexión a internet estable</strong></li>
+                </ul>
+            </div>
+            
+            <div class="info-box blue">
+                <h4>🔄 La URL cambia cuando:</h4>
+                <ul>
+                    <li>Cierras y vuelves a abrir ngrok</li>
+                    <li>Reinicias tu computadora</li>
+                    <li>Pasan 2 horas (límite del plan gratuito)</li>
+                </ul>
+                <p><strong>Solución:</strong> Volver a ejecutar <code>ngrok http 8080</code> y compartir la nueva URL.</p>
+            </div>
+            
+            <div class="info-box purple">
+                <h4>🛡️ Pantalla de advertencia de ngrok</h4>
+                <p>La primera vez que tus compañeros accedan, verán una pantalla de advertencia (es normal en la versión gratuita).</p>
+                <p>Solo deben hacer clic en <strong>"Visit Site"</strong> para continuar.</p>
+            </div>
+            
+            <h2>9.2 Otras Opciones para Compartir</h2>
+            
+            <h3>LocalTunnel (alternativa gratuita)</h3>
+            <ul>
+                <li>Similar a ngrok pero sin necesidad de registro</li>
+                <li>Requiere Node.js instalado</li>
+                <li>Comando: <code>npx localtunnel --port 8080</code></li>
+            </ul>
+            
+            <h3>Hosting gratuito (para compartir permanentemente)</h3>
+            <ul>
+                <li><strong>InfinityFree</strong> - Hosting PHP gratuito</li>
+                <li><strong>000webhost</strong> - 1GB gratis, soporte PHP y MySQL</li>
+                <li><strong>Heroku</strong> - Requiere adaptación del proyecto</li>
+            </ul>
+            
+            <p><em>Nota: Subir a hosting requiere configuración adicional y está fuera del alcance de esta guía.</em></p>
+        </div>
+
+        <!-- 10. FAQ -->
+        <div class="section" id="faq">
+            <h1>10. ❓ Preguntas Frecuentes</h1>
+            
+            <h2>Preguntas Generales</h2>
+            
+            <div class="faq-item">
+                <div class="faq-question">¿Necesito conocimientos de programación para usar la plataforma?</div>
+                <div class="faq-answer">
+                    No, como usuario (estudiante o instructor) no necesitas saber programar. La interfaz es intuitiva y funciona como cualquier sitio web. Solo necesitas saber programación si quieres modificar el código del proyecto.
+                </div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">¿Los pagos son reales?</div>
+                <div class="faq-answer">
+                    No, este proyecto simula el proceso de compra. No se realizan transacciones reales ni se cobran tarjetas de crédito. Es solo para fines educativos y de demostración.
+                </div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">¿Puedo cambiar mi rol de Aprendiz a Capacitador?</div>
+                <div class="faq-answer">
+                    Sí, un administrador puede cambiar tu rol desde el panel de gestión de usuarios. Contacta al administrador de la plataforma para solicitar el cambio.
+                </div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">¿Cuántos cursos puedo crear como instructor?</div>
+                <div class="faq-answer">
+                    No hay límite en la cantidad de cursos que puedes crear. Sin embargo, ten en cuenta el espacio disponible en el servidor para los archivos de video.
+                </div>
+            </div>
+            
+            <h2>Problemas Técnicos</h2>
+            
+            <div class="faq-item">
+                <div class="faq-question">¿Qué tamaño máximo pueden tener los videos?</div>
+                <div class="faq-answer">
+                    Por defecto, PHP permite archivos de hasta 2MB. Sin embargo, este límite se puede aumentar editando el archivo <code>php.ini</code>. La documentación incluye instrucciones para aumentar hasta 2GB.
+                </div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">¿Qué formatos de video son compatibles?</div>
+                <div class="faq-answer">
+                    La plataforma acepta MP4, AVI, MOV, WMV y otros formatos comunes. Se recomienda MP4 para mejor compatibilidad con navegadores.
+                </div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">¿Qué formatos de documentos puedo subir?</div>
+                <div class="faq-answer">
+                    Puedes subir PDF, DOCX, PPTX, TXT, y otros formatos de documentos. Los PDF se visualizan directamente en el navegador, otros formatos se descargan.
+                </div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">¿Por qué mi curso no aparece en el catálogo?</div>
+                <div class="faq-answer">
+                    Puede ser por dos razones:
+                    <ul>
+                        <li>El curso no está marcado como "Publicado" - Edita el curso y activa la publicación</li>
+                        <li>El curso no ha sido aprobado por un administrador - Espera la aprobación</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">Olvidé mi contraseña, ¿qué hago?</div>
+                <div class="faq-answer">
+                    Actualmente el proyecto no tiene función de recuperación de contraseña implementada. Contacta al administrador para que restablezca tu contraseña manualmente en la base de datos.
+                </div>
+            </div>
+            
+            <h2>Uso de ngrok</h2>
+            
+            <div class="faq-item">
+                <div class="faq-question">¿ngrok es seguro?</div>
+                <div class="faq-answer">
+                    Sí, ngrok usa HTTPS (conexión encriptada). Sin embargo, recuerda que estás exponiendo tu computadora a internet, así que:
+                    <ul>
+                        <li>Solo comparte la URL con personas de confianza</li>
+                        <li>Cierra ngrok cuando termines de usarlo</li>
+                        <li>No compartas datos sensibles reales en la plataforma</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">¿Puedo tener una URL fija en ngrok?</div>
+                <div class="faq-answer">
+                    En la versión gratuita, la URL cambia cada vez que reinicias ngrok. Para obtener una URL personalizada y permanente necesitas actualizar a ngrok Pro (de pago).
+                </div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">¿Cuántas personas pueden acceder simultáneamente con ngrok?</div>
+                <div class="faq-answer">
+                    No hay un límite estricto, pero depende de tu conexión a internet y los recursos de tu computadora. Para 10-20 usuarios simultáneos debería funcionar bien. Para más usuarios, considera usar un servidor real.
+                </div>
+            </div>
+            
+            <h2>Gestión de Cursos</h2>
+            
+            <div class="faq-item">
+                <div class="faq-question">¿Puedo editar un curso después de publicarlo?</div>
+                <div class="faq-answer">
+                    Sí, puedes editar cursos en cualquier momento. Sin embargo, si haces cambios importantes, puede que un administrador deba aprobar los cambios nuevamente.
+                </div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">¿Puedo eliminar un curso?</div>
+                <div class="faq-answer">
+                    Los instructores pueden despublicar cursos (hacerlos invisibles). La eliminación permanente solo puede realizarla un administrador.
+                </div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">¿Puedo ofrecer cursos gratuitos?</div>
+                <div class="faq-answer">
+                    Sí, al crear el curso puedes establecer el precio en $0 (cero). Los estudiantes podrán "comprarlo" sin costo y acceder inmediatamente.
+                </div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">¿Cuántas lecciones puedo agregar a un curso?</div>
+                <div class="faq-answer">
+                    No hay límite técnico en la cantidad de lecciones. Puedes crear tantas como necesites para tu curso.
+                </div>
+            </div>
+        </div>
+
+        <!-- FOOTER -->
+        <div class="footer">
+            <h3>📚 Marketplace Educativo Internacional</h3>
+            <p>Proyecto Universitario - Plataforma de Aprendizaje en Línea</p>
+            <p style="margin-top: 20px;">
+                <strong>Tecnologías:</strong> PHP | MySQL | HTML5 | CSS3 | JavaScript<br>
+                <strong>Arquitectura:</strong> MVC (Modelo-Vista-Controlador)<br>
+                <strong>Versión:</strong> 1.0 | Mayo 2026
+            </p>
+            <hr style="margin: 20px 0; border: none; border-top: 1px solid #ddd;">
+            <p style="font-size: 0.9em; color: #888;">
+                Este proyecto fue desarrollado con fines educativos.<br>
+                Para más información técnica, consulta los archivos README.md y MANUAL_TECNICO.md
+            </p>
+        </div>
+
+        <!-- INSTRUCCIONES PARA PDF -->
+        <div class="no-print" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 30px; border-radius: 10px; margin-top: 30px;">
+            <h3 style="color: white; text-align: center; margin-bottom: 20px;">📄 Para Guardar como PDF</h3>
+            <ol style="font-size: 1.1em; line-height: 1.8;">
+                <li>Presiona <strong>Ctrl + P</strong> en tu teclado (o Cmd + P en Mac)</li>
+                <li>En "Destino" o "Impresora", selecciona <strong>"Guardar como PDF"</strong></li>
+                <li>Ajusta las opciones:
+                    <ul>
+                        <li>Orientación: Vertical</li>
+                        <li>Márgenes: Normales</li>
+                        <li>Escala: 100% (o ajustar para caber en página)</li>
+                    </ul>
+                </li>
+                <li>Haz clic en <strong>"Guardar"</strong></li>
+                <li>Elige ubicación y nombre para el archivo PDF</li>
+            </ol>
+            <p style="text-align: center; margin-top: 20px; font-size: 0.9em;">
+                <em>💡 Consejo: Usa modo de impresión "Color" para conservar los colores de las cajas de información</em>
+            </p>
+        </div>
+    </div>
+</body>
+</html>

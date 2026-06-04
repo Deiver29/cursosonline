@@ -17,6 +17,9 @@ class HomeController {
         $cursos = $cursoModel->obtenerCatalogo($filtros);
         $categorias = $categoriaModel->obtenerTodas();
         
+        // Solo mostrar 5 cursos destacados en la portada
+        $cursosDestacados = array_slice($cursos, 0, 5);
+        
         require_once 'views/home/index.php';
     }
     
