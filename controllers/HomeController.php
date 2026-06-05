@@ -47,4 +47,20 @@ class HomeController {
         
         require_once 'views/home/curso.php';
     }
+
+    public function catalogo() {
+        $cursoModel = new Curso();
+        $categoriaModel = new Categoria();
+
+        // Obtener filtros simples (opcional)
+        $filtros = [];
+        if (isset($_GET['busqueda'])) $filtros['busqueda'] = $_GET['busqueda'];
+        if (isset($_GET['categoria'])) $filtros['categoria'] = $_GET['categoria'];
+        if (isset($_GET['nivel'])) $filtros['nivel'] = $_GET['nivel'];
+
+        $cursos = $cursoModel->obtenerCatalogo($filtros);
+        $categorias = $categoriaModel->obtenerTodas();
+
+        require_once 'views/home/catalogo.php';
+    }
 }

@@ -22,7 +22,7 @@
                 
                 <ul class="nav-menu" id="navMenu">
                     <li><a href="<?php echo BASE_URL; ?>">Inicio</a></li>
-                    <li><a href="<?php echo BASE_URL; ?>home/index">Cursos</a></li>
+                    <li><a href="<?php echo BASE_URL; ?>home/catalogo">Cursos</a></li>
                     
                     <?php if (isset($_SESSION['usuario_id'])): ?>
                         <li><a href="<?php echo BASE_URL; ?>carrito">🛒 Carrito</a></li>
@@ -71,7 +71,7 @@
                     <h4>Enlaces</h4>
                     <ul>
                         <li><a href="<?php echo BASE_URL; ?>">Inicio</a></li>
-                        <li><a href="<?php echo BASE_URL; ?>home/index">Cursos</a></li>
+                        <li><a href="<?php echo BASE_URL; ?>home/catalogo">Cursos</a></li>
                         <li><a href="#">Sobre Nosotros</a></li>
                     </ul>
                 </div>
